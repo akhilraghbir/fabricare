@@ -95,18 +95,18 @@ if($_SERVER['HTTP_HOST']=='surbjit.aotg.ca'){
    $DBPASS=';bk(xVdz6m&R';
    $DBNAME='mycrywal_surbjit';
 }else if($_SERVER['HTTP_HOST']=='localhost'){
-   $CONFIG_SERVER_ROOT = 'http://localhost/larush/';
-   $CONFIG_SERVER_PROJECT_ROOT = 'http://localhost/larush/';
-   $CONFIG_SERVER_UPLOADS_ROOT = "http://localhost/larush/uploads/";
-   $CONFIG_SERVER_ADMIN_ROOT = 'http://localhost/larush/administrator/';
-   $DBHOST='localhost';
-   $DBUSER='root';
-   $DBPASS='';
-   $DBNAME='laurish';
+   $CONFIG_SERVER_ROOT = 'http://localhost/fabricare/';
+   $CONFIG_SERVER_PROJECT_ROOT = 'http://localhost/fabricare/';
+   $CONFIG_SERVER_UPLOADS_ROOT = "http://localhost/fabricare/uploads/";
+   $CONFIG_SERVER_ADMIN_ROOT = 'http://localhost/fabricare/administrator/';
+   $DBHOST= 'hellotext.online';
+   $DBUSER='fabricare';
+   $DBPASS='t7GbKksXI75eZh0iC6LG';
+   $DBNAME='fabricare';
 }
 $RAND_COLORS = array("#39bdba","#fbc10a","#82bb3a","#5FBEAA","#34495E","#FF9F55","#dc3545","#74A6ED","#AB988B","#90CA77","#E9B64D","#2A75A9","#CE7898","#6B78B4","#217C7E","#0e370c","#ec6b02","#8b3f02","#ff5c30","#2d2d2d","#8f6903","#e5ab0O","#3e2f72","#bb0O89","#0f666d","#efefef");
 defined('RAND_COLORS') OR define('RAND_COLORS',$RAND_COLORS);
-defined('SITENAME') or define('SITENAME','Larush ERP Software');
+defined('SITENAME') or define('SITENAME','Fabri Care');
 defined('CONFIG_SERVER_ROOT') OR define('CONFIG_SERVER_ROOT',$CONFIG_SERVER_ROOT);
 defined('CONFIG_SERVER_ADMIN_ROOT') OR define('CONFIG_SERVER_ADMIN_ROOT',$CONFIG_SERVER_ADMIN_ROOT);
 defined('CONFIG_SERVER_PROJECT_ROOT') OR define('CONFIG_SERVER_PROJECT_ROOT',$CONFIG_SERVER_PROJECT_ROOT);
