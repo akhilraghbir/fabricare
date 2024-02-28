@@ -194,16 +194,24 @@ class Common_model extends CI_Model{
 
 	function updateDataFromTable($table='', $data=array(), $field='', $ID=0){
 		$table=$table;
+
 		if(empty($table) || !count($data)){
 			return false;
 		}
 		else{
-			if(is_array($field)){
+			if(is_array($field))
+			{
 
 				$this->db->where($field);
-			}else{
+			}
+			else
+			{
+
+
 				$this->db->where($field , $ID);
 			}
+			
+
 			return $this->db->update($table , $data);
 		}
 	}

@@ -13,6 +13,33 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+
+                 <li class="<?= ($modulename == 'Users') ? 'mm-active' : ''; ?>">
+                        <a href="<?= base_url('administrator/Services'); ?>" class="waves-effect">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                            <span>Services</span>
+                        </a>
+                    </li>
+                    <li class="<?= ($modulename == 'Zipcodes') ? 'mm-active' : ''; ?>">
+                        <a href="<?= base_url('administrator/zipcodes'); ?>" class="waves-effect">
+                         <i class="fa fa-envelope-open" aria-hidden="true"></i>
+                            <span>Zip Codes</span>
+                        </a>
+                    </li>
+                     <li class="<?= ($modulename == 'Promocodes') ? 'mm-active' : ''; ?>">
+                        <a href="<?= base_url('administrator/promocodes'); ?>" class="waves-effect">
+                            <i class="fa fa-spinner" aria-hidden="true"></i>
+                            <span>Promo codes</span>
+                        </a>
+                    </li>
+                     <li class="<?= ($modulename == 'Products') ? 'mm-active' : ''; ?>">
+                        <a href="<?= base_url('administrator/products'); ?>" class="waves-effect">
+                            <i class="ri-account-circle-line"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+
+
                 <?php if($this->session->user_type == 'Admin'){ ?>
                     <li class="<?= ($modulename == 'Users') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/Users'); ?>" class="waves-effect">

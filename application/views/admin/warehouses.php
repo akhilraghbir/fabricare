@@ -130,6 +130,7 @@
 <script type="text/javascript">
     function getdata() {
         var status = $("#status").val();
+     
         var clist = $('#warehousesList').DataTable({
             "destroy": true,
             "responsive": false,
