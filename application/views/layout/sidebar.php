@@ -13,7 +13,12 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
+                <li class="<?= ($modulename == 'Banners') ? 'mm-active' : ''; ?>">
+                        <a href="<?= base_url('administrator/Banners'); ?>" class="waves-effect">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                            <span>Banners</span>
+                        </a>
+                    </li>
                  <li class="<?= ($modulename == 'Users') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/Services'); ?>" class="waves-effect">
                             <i class="fa fa-wrench" aria-hidden="true"></i>

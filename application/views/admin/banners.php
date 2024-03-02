@@ -19,48 +19,38 @@
 
                 if (isset($formData['id'])) {
                     $id = $formData['id'];
-                    $url = CONFIG_SERVER_ADMIN_ROOT . "promocodes/edit/$id";
+                    $url = CONFIG_SERVER_ADMIN_ROOT . "banners/edit/$id";
                 } else {
-                    $url = CONFIG_SERVER_ADMIN_ROOT . "promocodes/add";
+                    $url = CONFIG_SERVER_ADMIN_ROOT . "banners/add";
                 }
-                echo form_open($url, array('class' => 'promocodesRegistration', 'id' => 'promocodesRegistration')); ?>
+                echo form_open($url, array('class' => 'bannersRegistration', 'id' => 'bannersRegistration')); ?>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="Promocode" class="">Promocode</label>
-                            <input value="<?php if (isset($formData['promocode'])) { echo $formData['promocode'];} ?>" name="promocode" id="promocode" placeholder="Please Enter Promocode" autocomplete='off' type="text" class="form-control">
+                            <label for="banner_title" class="">Banner Ttile</label>
+                            <input value="<?php if (isset($formData['banner_title'])) { echo $formData['banner_title'];} ?>" name="banner_title" id="banner_title" placeholder="Please Enter Banner Title" autocomplete='off' type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="banner_sub_title" class="">Banner Sub Ttile</label>
+                            <input value="<?php if (isset($formData['banner_sub_title'])) { echo $formData['banner_sub_title'];} ?>" name="banner_sub_title" id="banner_sub_title" placeholder="Please Enter Banner  Sub Title" autocomplete='off' type="text" class="form-control">
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    
+                </div>
+
+                <div class="row">
+                <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="discount_value" class="">Discount Value</label>
-                            <input value="<?php if (isset($formData['discount_value'])) { echo $formData['discount_value'];} ?>" name="discount_value" id="min_cart_value" placeholder="Please Enter Discount Value" autocomplete='off' type="text" class="form-control">
+                            <label for="action_link" class="">Banner Action Link</label>
+                            <input value="<?php if (isset($formData['action_link'])) { echo $formData['action_link'];} ?>" name="action_link" id="action_link" placeholder="Please Enter Banner  Action Link" autocomplete='off' type="text" class="form-control">
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="min_cart_value" class="">Minimum Cart Value</label>
-                            <input value="<?php if (isset($formData['min_cart_value'])) { echo $formData['min_cart_value'];} ?>" name="min_cart_value" id="min_cart_value" placeholder="Please Enter Minimum Cart Value" autocomplete='off' type="text" class="form-control">
-                        </div>
-                    </div>
-                     </div>
-
-                    <div class="row">
-                     <div class="col-md-6">
-
-                                <div class="mb-3">
-                                    <label>Promocode Type</label>
-                                    <select name="promocode_type" id="promocode_type" class="form-control">
-                                        <option value="">Select Type</option>
-                                        <option value="Flat" <?php if (isset($formData['promocode_type'])) { if($formData['promocode_type']=='Flat') { echo 'selected';}else{  } } ?>>Flat</option>
-                                        <option value="Percentage" <?php if (isset($formData['promocode_type'])) { if($formData['promocode_type']=='Inactive') { echo 'selected';}else{  } } ?>>Percentage</option>
-                                    </select>
-                                </div>
-                            </div>
-                     <div class="col-md-6">
-                                    <div class="mb-3">
+                <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Select Status</label>
                                     <select name="status" id="status" class="form-control">
                                         <option value="">Select Status</option>
@@ -69,22 +59,28 @@
                                     </select>
                                 </div>
                             </div>
+                
+                   
                 </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="Fromdate" class="">From Date</label>
-                    <input value="<?php if (isset($formData['from_date'])) { echo $formData['from_date'];} ?>" name="from_date" id="from_date"  autocomplete='off' type="date" class="form-control">
+                <div class="row">
+              
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="banner_img" class="">Banner Image</label>
+                            <input type="file" class="banner_img_element form-control border" >
+                            <input type="hidden" id="banner_img"  class="banner_img" value="<?php if(isset($formData)){ echo $formData['banner_img']; } ?>" name="banner_img">
+                            <ul id="banner_img_uploaded">
+                            <?php if(isset($formData) && $formData['banner_img']!=''){ ?>
+                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['banner_img']); ?>')" >View</a>
+                            <?php } ?>
+                            </ul>
+                            <div style="display:none" class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                   
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="todate" class="">To Date</label>
-                    <input value="<?php if (isset($formData['to_date'])) { echo $formData['to_date'];} ?>" name="to_date" id="to_date"  autocomplete='off' type="date" class="form-control">
-                </div>
-            </div>
-        </div>
-
                 
                 <div>
                     <?php if (isset($formData['id'])) { ?>
@@ -101,29 +97,19 @@
 
    
 
-    $('.web_image_element').change(function() {
+    $('.banner_img_element').change(function() {
         formdata = new FormData();
-        var path = "uploads/services/";
+        var path = "uploads/banners/";
         if ($(this).prop('files').length > 0) {
             file = $(this).prop('files')[0];
             formdata.append("file", file);
             formdata.append("path", path);
-            $(".web_image_element").val('');
-            uploadDocs(formdata, 'web_image_uploaded', 'web_image');
+            $(".banner_img_element").val('');
+            uploadDocs(formdata, 'banner_img_uploaded', 'banner_img');
         }
     });
 
-    $('.app_image_element').change(function() {
-        formdata = new FormData();
-        var path = "uploads/services/";
-        if ($(this).prop('files').length > 0) {
-            file = $(this).prop('files')[0];
-            formdata.append("file", file);
-            formdata.append("path", path);
-            $(".app_image_element").val('');
-            uploadDocs(formdata, 'app_image_Uploaded', 'app_image');
-        }
-    });
+    
 </script>
                 <?php
    }
@@ -135,17 +121,14 @@
                 <div class="card">
                     <div class="card-body">
                     <div class="table-responsive tasks dataGridTable">
-                            <table id="promocodes_list" class="table card-table table-vcenter text-nowrap mb-0 border nowrap" style="width:100%">
+                            <table id="banners_list" class="table card-table table-vcenter text-nowrap mb-0 border nowrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
-                                        <th>Promocode</th>
-                                        <th>Promocode Type</th>
-                                        <th>Discount Value</th>
-                                        
-                                        <th>Min Cart Value</th>
-                                         <th>From Date</th>
-                                          <th>To Date</th>
+                                        <th>Banner Title</th>
+                                        <th> Banner Sub Title</th>
+                                        <th>Banner Image</th>
+                                        <th>Action Link</th>
                                         <th>Status</th>
                                         <th>Created On</th>
                                         <th>Action</th>
@@ -171,7 +154,7 @@
     function getdata() {
         var status = $("#status").val();
      
-        $('#promocodes_list').DataTable({
+        $('#banners_list').DataTable({
             "destroy": true,
             "responsive": false,
             "processing": true,
@@ -180,11 +163,11 @@
                 [0, "desc"]
             ],
             "ajax": {
-                "url": "<?php echo CONFIG_SERVER_ADMIN_ROOT ?>promocodes/ajaxListing",
+                "url": "<?php echo CONFIG_SERVER_ADMIN_ROOT ?>banners/ajaxListing",
                 "type": 'POST',
                 'data': {
                     status: status,
-                  
+                   
                 }
             },
             language: {
@@ -214,11 +197,11 @@
                     action: function() {
                         $('#page-overlay').show();
                         $.ajax({
-                            url: '<?php echo base_url(); ?>administrator/promocodes/updateStatus',
+                            url: '<?php echo base_url(); ?>administrator/banners/updateStatus',
                             type: 'POST',
                             data: {
                                 "statusresult": "1",
-                                "promocode_id": uId,
+                                "banner_id": uId,
                                 "status": sTaTus
                             },
                             success: function(data) {
@@ -226,15 +209,15 @@
                                 var msg = result.message;
                                 if (result.error == '0') {
                                     toastr['success'](msg);
-                                    $('#promocodes_list').DataTable().ajax.reload();
+                                    $('#banners_list').DataTable().ajax.reload();
                                 } else {
                                     toastr['warning'](msg);
-                                    $('#promocodes_list').DataTable().ajax.reload();
+                                    $('#banners_list').DataTable().ajax.reload();
                                 }
                             },
                             error: function(e) {
                                 toastr['warning'](e.message);
-                                $('#promocodes_list').DataTable().ajax.reload();
+                                $('#banners_list').DataTable().ajax.reload();
                             }
                         });
 
