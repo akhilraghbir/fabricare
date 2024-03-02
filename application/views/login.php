@@ -28,7 +28,7 @@
                                         <div class="text-center">
                                             <div>
                                                 <a href="<?= base_url(); ?>" class="">
-                                                    <img src="<?= base_url('assets/backend/');?>images/larush_logo.jpg" alt="" height="120" class="auth-logo logo-dark mx-auto">
+                                                    <img src="<?= base_url();?>assets/frontend/images/logo.svg" alt="" height="120" class="auth-logo logo-dark mx-auto">
                                                 </a>
                                             </div>
                                             <h4 class="font-size-18 mt-4">Welcome Back !</h4>

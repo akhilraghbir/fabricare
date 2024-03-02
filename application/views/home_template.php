@@ -1,8 +1,4 @@
-<?PHP if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<?php
-	error_reporting(0);
-	$selectedlang = $this->session->language;
-	$this->lang->load('labels', strtolower($selectedlang));
+<?PHP if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 	//header of template
 	$this->load->view('layout/header');
 ?>
