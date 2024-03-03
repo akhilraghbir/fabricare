@@ -8,7 +8,7 @@ class Login_model extends CI_Model
         
     }
     function validate_user(){            
-        $password = md5($this->input->post('password'));
+        $password = hash('sha256',$this->input->post('password'));
         $username = $this->input->post('username');
         $this->db->select('*');
         $this->db->from('tbl_users');

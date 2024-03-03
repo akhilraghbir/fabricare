@@ -1,3 +1,26 @@
+<!--location validate-->
+<div class="modal fade pincodemodal" id="pincodemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-theme">
+        <div class="modal-body">
+          <button type="button" class="btn-close pull-right" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center my-4">
+            <img src="<?= base_url('assets/frontend/') ?>images/pincode.png" class="loaction">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control Onlynumbers" maxlength="6" id="pincode" placeholder="Enter your area pincode">
+          </div>
+          <div class="service-info py-2">
+            <span class="d-none pincode-check pincode-check-success bg-dark-subtle p-1 px-3 rounded-5 text-success"><i class="bi bi-info-circle-fill"></i> We are serviceable in this area!</span>
+            <span class="d-none pincode-check pincode-check-danger bg-dark-subtle p-1 px-3 rounded-5 text-danger"><i class="bi bi-info-circle-fill"></i> Sorry, Our services are not available in this area.</span>
+          </div>
+          <div class="text-center mt-3">
+            <button type="button" onclick="validatePincode()" class="btn btn-theme validate-pincode-btn rounded-pill px-5">Check</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <section class="footer bg-dark pt-5 pb-4">
       <div class="container">
         <div class="row border-bottom">
@@ -5,7 +28,6 @@
             <div class="my-4">
               <img src="<?= base_url('assets/frontend/') ?>images/logo.svg" class="img-fluid">
             </div>
-
           </div>
           <div class="col-md-3 footer-links">
             <div class="footer-title">
@@ -13,10 +35,10 @@
               <div class="footer-divider"></div>
             </div>
             <ul class="list-unstyled">
-              <li><a href="index.html" class="text-light">Home</a></li>
-              <li><a href="about.html" class="text-light">About Us</a></li>
-              <li><a href="services.html" class="text-light">Our services</a></li>
-              <li><a href="contact.html" class="text-light">Contact Us</a></li>
+              <li><a href="<?= base_url(); ?>" class="text-light">Home</a></li>
+              <li><a href="<?= base_url('about'); ?>" class="text-light">About Us</a></li>
+              <li><a href="<?= base_url('services'); ?>" class="text-light">Our services</a></li>
+              <li><a href="<?= base_url('contact'); ?>" class="text-light">Contact Us</a></li>
             </ul>
           </div>
           <div class="col-md-3 footer-links">
@@ -25,10 +47,10 @@
               <div class="footer-divider"></div>
             </div>
             <ul class="list-unstyled">
-              <li><a href="terms-and-conditions.html" class="text-light">Terms & conditions</a></li>
-              <li><a href="privacy-policy.html" class="text-light">Privacy Policy</a></li>
-              <li><a href="refund-policy.html" class="text-light">Refund Policy</a></li>
-              <li><a href="cancellation-policy.html" class="text-light">Cancellation Policy</a></li>
+              <li><a href="<?= base_url(); ?>terms-and-conditions" class="text-light">Terms & conditions</a></li>
+              <li><a href="<?= base_url(); ?>privacy-policy" class="text-light">Privacy Policy</a></li>
+              <li><a href="<?= base_url(); ?>refund-policy" class="text-light">Refund Policy</a></li>
+              <li><a href="<?= base_url(); ?>cancellation-policy" class="text-light">Cancellation Policy</a></li>
             </ul>
           </div>
           <div class="col-md-3 footer-links">
@@ -46,7 +68,7 @@
         <hr class="bg-theme-light" />
         <div class="row">
           <div class="col-md-6">
-            <p class="footer-credits1 text-light mb-0">© 2024 Fabricare. All Rights Reserved.</p>
+            <p class="footer-credits1 text-light mb-0">© <?= date('Y'); ?> <?= SITENAME; ?>. All Rights Reserved.</p>
           </div>
           <div class="col-md-6">
             <p class="footer-credits2 text-light mb-0">Design &amp; Developed by <a href="https://webartise.com" class="text-theme-light text-decoration-none" rel="nofollow">WebArtise</a></p>

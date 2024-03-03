@@ -39,7 +39,7 @@ class Promocodes extends CI_Controller {
 		if(($this->input->post('add'))){		
 			$this->form_validation->set_session_data($this->input->post());
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('promocode','discount_value','promocode_type','min_cart_value','status','from_date','to_date');    
+			$mandatoryFields=array('promocode','discount_value','promocode_type','min_cart_value','description','from_date','to_date');    
 			
             foreach($mandatoryFields as $row){
 				$fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
@@ -78,7 +78,7 @@ class Promocodes extends CI_Controller {
 		if(($this->input->post('edit'))){
 
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('promocode','discount_value','promocode_type','min_cart_value','status','from_date','to_date');      
+			$mandatoryFields=array('promocode','discount_value','promocode_type','description','min_cart_value','from_date','to_date');      
             foreach($mandatoryFields as $row){
             $fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
 

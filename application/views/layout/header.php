@@ -52,7 +52,7 @@
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
-                        <a href="<?= base_url(); ?>" class="logo logo-dark">
+                        <a href="<?= base_url('administrator/dashboard'); ?>" class="logo logo-dark">
                             <span class="logo-sm">
                                 <img src="<?= base_url('assets/backend/');?>images/larush_logo.jpg" alt="logo-sm-dark" height="80">
                             </span>
@@ -61,7 +61,7 @@
                             </span>
                         </a>
 
-                        <a href="<?= base_url(); ?>" class="logo logo-light">
+                        <a href="<?= base_url('administrator/dashboard'); ?>" class="logo logo-light">
                             <span class="logo-sm">
                                 <img src="<?= base_url('assets/backend/');?>images/larush_logo.jpg" alt="logo-sm-light" height="80">
                             </span>

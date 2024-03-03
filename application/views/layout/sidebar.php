@@ -8,17 +8,23 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Menu</li>
                 <li class="<?= ($modulename == 'Dashboard') ? 'mm-active' : ''; ?>">
-                    <a href="<?= base_url(); ?>" class="waves-effect">
+                    <a href="<?= base_url('administrator/dashboard'); ?>" class="waves-effect">
                         <i class="ri-dashboard-line"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="<?= ($modulename == 'Banners') ? 'mm-active' : ''; ?>">
+                <li class="<?= ($modulename == 'Banners' || $modulename == 'banners') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/Banners'); ?>" class="waves-effect">
                             <i class="fa fa-wrench" aria-hidden="true"></i>
                             <span>Banners</span>
                         </a>
                     </li>
+                <li class="<?= ($modulename == 'Categories') ? 'mm-active' : ''; ?>">
+                    <a href="<?= base_url('administrator/Categories'); ?>" class="waves-effect">
+                        <i class="ri-list-fill"></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
                  <li class="<?= ($modulename == 'Users') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/Services'); ?>" class="waves-effect">
                             <i class="fa fa-wrench" aria-hidden="true"></i>
@@ -43,15 +49,15 @@
                             <span>Products</span>
                         </a>
                     </li>
-
-
-                <?php if($this->session->user_type == 'Admin'){ ?>
                     <li class="<?= ($modulename == 'Users') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/Users'); ?>" class="waves-effect">
                             <i class="ri-account-circle-line"></i>
                             <span>Users</span>
                         </a>
                     </li>
+
+                <?php /* if($this->session->user_type == 'Admin'){ ?>
+                    
                     <li class="<?= ($modulename == 'Warehouses') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/Warehouses'); ?>" class="waves-effect">
                             <i class="ri-building-line"></i>
@@ -191,7 +197,7 @@
                             <span>Leads</span>
                         </a>
                     </li>
-                <?php } ?>
+                <?php } */ ?>
             </ul>
         </div>
         <!-- Sidebar -->

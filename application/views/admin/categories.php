@@ -25,10 +25,48 @@
                 echo form_open($url, array('class' => 'categories', 'id' => 'categories')); ?>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="first name" class="">Category <span class="text-danger">*</span></label>
                             <input value="<?php if (isset($formData['category'])) { echo $formData['category']; } ?>" name="category" id="category" placeholder="Please Enter Category" autocomplete='off' type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="first name" class="">Parent Category <span class="text-danger">*</span></label>
+                            <select name="parent_id" class="form-control">
+                                <option value="">Select Category</option>
+                                <?php if(!empty($categories)){ 
+                                    foreach($categories as $category){
+                                ?>
+                                    <option value="<?= $category['id'];?>"><?= $category['category'];?></option>
+                                <?php } } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="exampleEmail11" class="">Category Icon<span class="text-danger"> *</span></label>
+                            <input type="file" class="category_icon_element form-control border" >
+                            <input type="hidden" id="category_icon"  class="category_icon" value="<?php if(isset($formData)){ echo $formData['category_icon']; } ?>" name="category_icon">
+                            <ul id="category_icon_uploaded">
+                            <?php if(isset($formData) && $formData['category_icon']!=''){ ?>
+                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['category_icon']); ?>')" >View</a>
+                            <?php } ?>
+                            </ul>
+                            <div style="display:none" class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Select Status<span class="text-danger"> *</span></label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="Active" <?php if (isset($formData['status'])) { if($formData['status']=='Active') { echo 'selected';}else{ echo 'selected'; } } ?>>Active</option>
+                                <option value="Inactive" <?php if (isset($formData['status'])) { if($formData['status']=='Inactive') { echo 'selected';}else{  } } ?>>In Active</option>
+                            </select>
                         </div>
                     </div>
                 </div> 
@@ -44,6 +82,19 @@
                 </form>
             </div>
         </div>
+        <script>
+            $('.category_icon_element').change(function() {
+                formdata = new FormData();
+                var path = "uploads/categories/";
+                if ($(this).prop('files').length > 0) {
+                    file = $(this).prop('files')[0];
+                    formdata.append("file", file);
+                    formdata.append("path", path);
+                    $(".category_icon_element").val('');
+                    uploadDocs(formdata, 'category_icon_uploaded', 'category_icon');
+                }
+            });
+        </script>
     <?php } else { ?>
         <div class="row">
             <div class="col-lg-12">

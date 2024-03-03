@@ -127,12 +127,11 @@
 </head>
 <body>
     <center>
-
         <!-- Email Header : BEGIN -->
         <table cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin: auto;/* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */border-top: 1px solid #31423d;border-left: 1px solid #31423d;border-right: 1px solid #31423d;" class="email-container">
 			<tr style="background-color: #f7f7f7;">
 				<td style="text-align: center;width: 150px;padding: 12px;">
-				<img style="width:100px;" src="<?= base_url('assets/backend/images/logo.png'); ?>">
+				<img style="width:100px;" src="<?= base_url('assets/frontend/images/logo.svg'); ?>">
 				</td>
        
 			</tr>

@@ -29,26 +29,19 @@ class Banners extends CI_Controller {
 		$data['data'] = $formContent;
 		$data['form_action'] = $formName;
 		$data['banners'] = $this->Common_model->getDataFromTable('tbl_banners','*', $whereField='status', $whereValue='Active', $orderBy='', $order='', $limit='', $offset=0, true);
-		
-			$this->home_template->load('home_template','admin/banners',$data); 
-		
-		
+		$this->home_template->load('home_template','admin/banners',$data); 
 	}
 
 	public function add(){
 		if(($this->input->post('add'))){		
 			$this->form_validation->set_session_data($this->input->post());
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('banner_title','banner_sub_title','action_link','status');    
-			
+			$mandatoryFields=array('banner_title','banner_sub_title','status');    
             foreach($mandatoryFields as $row){
 				$fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
 				$this->form_validation->set_rules($row, $fieldname, 'required'); 
             }
-
-			$this->form_validation->set_rules('banner_title','Banner Name', 'required|callback_alpha_dash_space');
-			
-
+			$this->form_validation->set_rules('banner_title','Banner Name', 'required');
             if($this->form_validation->run() == FALSE){
 				$this->form_validation->set_session_data($this->input->post());
 				$errorMessage=validation_errors();
