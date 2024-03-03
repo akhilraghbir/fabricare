@@ -43,6 +43,21 @@
                             <span>Promo codes</span>
                         </a>
                     </li>
+
+                    <li class="<?= ($modulename == 'Cms') ? 'mm-active' : ''; ?>">
+                          <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-table-2"></i>
+                            <span>CMS</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="<?= base_url('administrator/privacy_policy'); ?>">Policy Policy</a></li>
+                            <li><a href="<?= base_url('administrator/terms_conditions'); ?>">Terms Conditions</a></li>
+                            <li><a href="<?= base_url('administrator/refund_policy'); ?>">Refund Policy</a></li>
+                            <li><a href="<?= base_url('administrator/cancellation_policy'); ?>">Cancellation Policy</a></li>
+                        </ul>
+                    </li>
+                   
+
                      <li class="<?= ($modulename == 'Products') ? 'mm-active' : ''; ?>">
                         <a href="<?= base_url('administrator/products'); ?>" class="waves-effect">
                             <i class="ri-account-circle-line"></i>
