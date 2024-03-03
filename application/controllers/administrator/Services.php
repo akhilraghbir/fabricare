@@ -39,17 +39,13 @@ class Services extends CI_Controller {
 		if(($this->input->post('add'))){		
 			$this->form_validation->set_session_data($this->input->post());
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('service_name');    
+			$mandatoryFields=array('service_name','web_image','web_banner','app_image','description');    
 			
             foreach($mandatoryFields as $row){
 				$fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
 				$this->form_validation->set_rules($row, $fieldname, 'required'); 
-            }
-
-			$this->form_validation->set_rules('service_name','Service Name', 'required|callback_alpha_dash_space');
-			/*$this->form_validation->set_rules('web_image','Web Image', 'required');
-			$this->form_validation->set_rules('app_image','App Image', 'required');
-			*/
+            
+			}
 
             if($this->form_validation->run() == FALSE){
 				$this->form_validation->set_session_data($this->input->post());
@@ -80,7 +76,7 @@ class Services extends CI_Controller {
 		if(($this->input->post('edit'))){
 
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('service_name');    
+			$mandatoryFields=array('service_name','web_image','web_banner','app_image','description');    
             foreach($mandatoryFields as $row){
             $fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
             $this->form_validation->set_rules($row, $fieldname, 'required'); 

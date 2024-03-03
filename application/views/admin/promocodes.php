@@ -25,67 +25,58 @@
                 }
                 echo form_open($url, array('class' => 'promocodesRegistration', 'id' => 'promocodesRegistration')); ?>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="Promocode" class="">Promocode</label>
-                            <input value="<?php if (isset($formData['promocode'])) { echo $formData['promocode'];} ?>" name="promocode" id="promocode" placeholder="Please Enter Promocode" autocomplete='off' type="text" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="discount_value" class="">Discount Value</label>
-                            <input value="<?php if (isset($formData['discount_value'])) { echo $formData['discount_value'];} ?>" name="discount_value" id="min_cart_value" placeholder="Please Enter Discount Value" autocomplete='off' type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="min_cart_value" class="">Minimum Cart Value</label>
-                            <input value="<?php if (isset($formData['min_cart_value'])) { echo $formData['min_cart_value'];} ?>" name="min_cart_value" id="min_cart_value" placeholder="Please Enter Minimum Cart Value" autocomplete='off' type="text" class="form-control">
-                        </div>
-                    </div>
-                     </div>
-
                     <div class="row">
-                     <div class="col-md-6">
-
-                                <div class="mb-3">
-                                    <label>Promocode Type</label>
-                                    <select name="promocode_type" id="promocode_type" class="form-control">
-                                        <option value="">Select Type</option>
-                                        <option value="Flat" <?php if (isset($formData['promocode_type'])) { if($formData['promocode_type']=='Flat') { echo 'selected';}else{  } } ?>>Flat</option>
-                                        <option value="Percentage" <?php if (isset($formData['promocode_type'])) { if($formData['promocode_type']=='Inactive') { echo 'selected';}else{  } } ?>>Percentage</option>
-                                    </select>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Promocode" class="">Promocode</label>
+                                <input value="<?php if (isset($formData['promocode'])) { echo $formData['promocode'];} ?>" name="promocode" id="promocode" placeholder="Please Enter Promocode" autocomplete='off' type="text" class="form-control">
                             </div>
-                     <div class="col-md-6">
-                                    <div class="mb-3">
-                                    <label>Select Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="">Select Status</option>
-                                        <option value="Active" <?php if (isset($formData['status'])) { if($formData['status']=='Active') { echo 'selected';}else{ echo 'selected'; } } ?>>Active</option>
-                                        <option value="Inactive" <?php if (isset($formData['status'])) { if($formData['status']=='Inactive') { echo 'selected';}else{  } } ?>>In Active</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="min_cart_value" class="">Minimum Cart Value</label>
+                                <input value="<?php if (isset($formData['min_cart_value'])) { echo $formData['min_cart_value'];} ?>" name="min_cart_value" id="min_cart_value" placeholder="Please Enter Minimum Cart Value" autocomplete='off' type="text" class="form-control">
                             </div>
-                </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="Fromdate" class="">From Date</label>
-                    <input value="<?php if (isset($formData['from_date'])) { echo $formData['from_date'];} ?>" name="from_date" id="from_date"  autocomplete='off' type="date" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="todate" class="">To Date</label>
-                    <input value="<?php if (isset($formData['to_date'])) { echo $formData['to_date'];} ?>" name="to_date" id="to_date"  autocomplete='off' type="date" class="form-control">
-                </div>
-            </div>
-        </div>
-
-                
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label>Promocode Type</label>
+                                <select name="promocode_type" id="promocode_type" class="form-control">
+                                    <option value="">Select Type</option>
+                                    <option value="Flat" <?php if (isset($formData['promocode_type'])) { if($formData['promocode_type']=='Flat') { echo 'selected';}else{  } } ?>>Flat</option>
+                                    <option value="Percentage" <?php if (isset($formData['promocode_type'])) { if($formData['promocode_type']=='Inactive') { echo 'selected';}else{  } } ?>>Percentage</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="discount_value" class="">Discount Value</label>
+                                <input value="<?php if (isset($formData['discount_value'])) { echo $formData['discount_value'];} ?>" name="discount_value" id="min_cart_value" placeholder="Please Enter Discount Value" autocomplete='off' type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="description" class="">Description</label>
+                            <textarea name="description" class="form-control" placeholder="Enter Description"><?php if (isset($formData['description'])) { echo $formData['description'];} ?></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Fromdate" class="">From Date</label>
+                                <input value="<?php if (isset($formData['from_date'])) { echo $formData['from_date'];} ?>" name="from_date" id="from_date"  autocomplete='off' type="date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="todate" class="">To Date</label>
+                                <input value="<?php if (isset($formData['to_date'])) { echo $formData['to_date'];} ?>" name="to_date" id="to_date"  autocomplete='off' type="date" class="form-control">
+                            </div>
+                        </div>
+                    </div>
                 <div>
                     <?php if (isset($formData['id'])) { ?>
                         <input type='hidden' name="id" value="<?php echo $formData['id'] ?>">

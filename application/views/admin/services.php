@@ -28,13 +28,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="Service name" class="">Service Name</label>
+                            <label for="Service name" class="">Service Name<span class="text-danger"> *</span></label>
                             <input value="<?php if (isset($formData['service_name'])) { echo $formData['service_name'];} ?>" name="service_name" id="service_name" placeholder="Please Enter Service Name" autocomplete='off' type="text" class="form-control">
                         </div>
                     </div>
                      <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Select Status</label>
+                                    <label>Select Status<span class="text-danger"> *</span></label>
                                     <select name="status" id="status" class="form-control">
                                         <option value="">Select Status</option>
                                         <option value="Active" <?php if (isset($formData['status'])) { if($formData['status']=='Active') { echo 'selected';}else{ echo 'selected'; } } ?>>Active</option>
@@ -45,9 +45,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="exampleEmail11" class="">Web Image</label>
+                            <label for="exampleEmail11" class="">Web Image<span class="text-danger"> *</span></label>
                             <input type="file" class="web_image_element form-control border" >
                             <input type="hidden" id="web_image"  class="web_image" value="<?php if(isset($formData)){ echo $formData['web_image']; } ?>" name="web_image">
                             <ul id="web_image_uploaded">
@@ -60,9 +60,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="exampleEmail11" class="">App Image</label>
+                            <label for="exampleEmail11" class="">Web Banner<span class="text-danger"> *</span></label>
+                            <input type="file" class="web_banner_element form-control border" >
+                            <input type="hidden" id="web_banner"  class="web_banner" value="<?php if(isset($formData)){ echo $formData['web_banner']; } ?>" name="web_banner">
+                            <ul id="web_banner_uploaded">
+                            <?php if(isset($formData) && $formData['web_banner']!=''){ ?>
+                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['web_banner']); ?>')" >View</a>
+                            <?php } ?>
+                            </ul>
+                            <div style="display:none" class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="exampleEmail11" class="">App Image<span class="text-danger"> *</span></label>
                             <input type="file" class="app_image_element form-control border" >
                             <input type="hidden" id="app_image"  class="app_image" value="<?php if(isset($formData)){ echo $formData['app_image']; } ?>" name="app_image">
                             <ul id="app_image_Uploaded">
@@ -75,6 +90,12 @@
                             </div>
                         </div>
                     </div> 
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="exampleEmail11" class="">Description<span class="text-danger"> *</span></label>
+                            <textarea name="description" class="form-control" placeholder="Enter Description"></textarea>
+                        </div>
+                    </div>
                 </div>
                 
                 <div>
@@ -101,6 +122,18 @@
             formdata.append("path", path);
             $(".web_image_element").val('');
             uploadDocs(formdata, 'web_image_uploaded', 'web_image');
+        }
+    });
+
+    $('.web_banner_element').change(function() {
+        formdata = new FormData();
+        var path = "uploads/services/";
+        if ($(this).prop('files').length > 0) {
+            file = $(this).prop('files')[0];
+            formdata.append("file", file);
+            formdata.append("path", path);
+            $(".web_banner_element").val('');
+            uploadDocs(formdata, 'web_banner_uploaded', 'web_banner');
         }
     });
 

@@ -1,39 +1,27 @@
 
     <section class="slider-section">
       <div id="carouselExampleCaptions" class="carousel slide">
-        <div class="carousel-indicators">
+        <!-- <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
+        </div> -->
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="<?= base_url('assets/frontend/') ?>images/s1.jpg" class="d-block w-100" alt="...">
-            <div class="bg-overley"></div>
-            <div class="carousel-caption">
-              <div class="h1 fw-bold">Quality Laundry Every Thread</div>
-              <p class="sub-title">Some representative placeholder content for the first slide.</p>
-              <p><a href="schdule-pickup.html" class="btn btn-theme rounded-pill px-4 fw-semibold">Schedule Pickup</a></p>
-            </div>
-          </div>
+          <?php if(!empty($sliders)){ 
+            foreach($sliders as $slider){
+          ?>
           <div class="carousel-item">
-            <img src="<?= base_url('assets/frontend/') ?>images/s2.jpg" class="d-block w-100" alt="...">
+            <img src="<?= base_url($slider['banner_img']) ?>" class="d-block w-100" alt="...">
             <div class="bg-overley"></div>
             <div class="carousel-caption">
-              <div class="h1 fw-bold">Professional Laundry Services near you</div>
-              <p class="sub-title">Some representative placeholder content for the second slide.</p>
-              <p><a href="schdule-pickup.html" class="btn btn-theme rounded-pill px-4 fw-semibold">Schedule Pickup</a></p>
+              <div class="h1 fw-bold"><?= ($slider['banner_title']) ? $slider['banner_title'] : ''; ?></div>
+              <p class="sub-title"><?= ($slider['banner_sub_title']) ? $slider['banner_sub_title'] : ''; ?></p>
+              <?php if(!empty($slider['action_link'])) { ?>
+              <p><a href="<?= $slider['action_link']; ?>" class="btn btn-theme rounded-pill px-4 fw-semibold">Schedule Pickup</a></p>
+              <?php } ?>
             </div>
           </div>
-          <div class="carousel-item">
-            <img src="<?= base_url('assets/frontend/') ?>images/s3.jpg" class="d-block w-100" alt="...">
-            <div class="bg-overley"></div>
-            <div class="carousel-caption">
-              <div class="h1 fw-bold">We Collect, Clean Laundry & Dry Cleaning.</div>
-              <p class="sub-title">Some representative placeholder content for the third slide.</p>
-              <p><a href="schdule-pickup.html" class="btn btn-theme rounded-pill px-4 fw-semibold">Schedule Pickup</a></p>
-            </div>
-          </div>
+          <?php } } ?>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -74,7 +62,7 @@
                   <li>Satisfaction Guarantee</li>
                 </ul>
               </div>
-              <a href="about.html" class="btn btn-theme rounded-pill px-4 fw-semibold shadow-sm">More About Us</a>
+              <a href="<?= base_url(); ?>about" class="btn btn-theme rounded-pill px-4 fw-semibold shadow-sm">More About Us</a>
             </div>
           </div>
         </div>
@@ -117,66 +105,20 @@
       <div class="container">
         <div class="text-center text-dark h1 fw-bold">Our Best Laundry Services For You!</div>
         <div class="service-slider py-3">
+          <?php if(!empty($services)){
+            foreach($services as $service){
+          ?>
           <div class="service-box">
             <div class="service-box_wrapper">
-              <div class="service-box_img"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.jpg" alt="img"></div>
-              <div class="service-box_icon"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.svg" alt="Icon"></div>
+              <div class="service-box_img"><img src="<?= base_url($service['web_banner']); ?>" alt="img"></div>
+              <div class="service-box_icon"><img src="<?= base_url($service['web_image']) ?>" alt="Icon"></div>
             </div>
             <div class="box-content background-image" style="background-image: url('images/service_shape_1.png');">
-              <h3 class="box-title"><a href="schdule-pickup.html">Ironing/Pressing</a></h3>
-              <p class="service-box_text">Ironing or pressing is the process of using a heated iron or press to smooth out wrinkles, creases, and remove fabric</p><a href="schdule-pickup.html" class="btn btn-theme px-4 rounded-pill">Order Now</a>
+              <h3 class="box-title"><a href="<?= base_url(); ?>schedule-pickup"><?= $service['service_name'] ?></a></h3>
+              <p class="service-box_text"><?= $service['description'];?></p><a href="<?= base_url(); ?>schedule-pickup" class="btn btn-theme px-4 rounded-pill">Order Now</a>
             </div>
           </div>
-          <div class="service-box">
-            <div class="service-box_wrapper">
-              <div class="service-box_img"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.jpg" alt="img"></div>
-              <div class="service-box_icon"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.svg" alt="Icon"></div>
-            </div>
-            <div class="box-content background-image" style="background-image: url('images/service_shape_1.png');">
-              <h3 class="box-title"><a href="schdule-pickup.html">Ironing/Pressing</a></h3>
-              <p class="service-box_text">Ironing or pressing is the process of using a heated iron or press to smooth out wrinkles, creases, and remove fabric</p><a href="schdule-pickup.html" class="btn btn-theme px-4 rounded-pill">Order Now</a>
-            </div>
-          </div>
-          <div class="service-box">
-            <div class="service-box_wrapper">
-              <div class="service-box_img"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.jpg" alt="img"></div>
-              <div class="service-box_icon"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.svg" alt="Icon"></div>
-            </div>
-            <div class="box-content background-image" style="background-image: url('images/service_shape_1.png');">
-              <h3 class="box-title"><a href="schdule-pickup.html">Ironing/Pressing</a></h3>
-              <p class="service-box_text">Ironing or pressing is the process of using a heated iron or press to smooth out wrinkles, creases, and remove fabric</p><a href="schdule-pickup.html" class="btn btn-theme px-4 rounded-pill">Order Now</a>
-            </div>
-          </div>
-          <div class="service-box">
-            <div class="service-box_wrapper">
-              <div class="service-box_img"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.jpg" alt="img"></div>
-              <div class="service-box_icon"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.svg" alt="Icon"></div>
-            </div>
-            <div class="box-content background-image" style="background-image: url('images/service_shape_1.png');">
-              <h3 class="box-title"><a href="schdule-pickup.html">Ironing/Pressing</a></h3>
-              <p class="service-box_text">Ironing or pressing is the process of using a heated iron or press to smooth out wrinkles, creases, and remove fabric</p><a href="schdule-pickup.html" class="btn btn-theme px-4 rounded-pill">Order Now</a>
-            </div>
-          </div>
-          <div class="service-box">
-            <div class="service-box_wrapper">
-              <div class="service-box_img"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.jpg" alt="img"></div>
-              <div class="service-box_icon"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.svg" alt="Icon"></div>
-            </div>
-            <div class="box-content background-image" style="background-image: url('images/service_shape_1.png');">
-              <h3 class="box-title"><a href="schdule-pickup.html">Ironing/Pressing</a></h3>
-              <p class="service-box_text">Ironing or pressing is the process of using a heated iron or press to smooth out wrinkles, creases, and remove fabric</p><a href="schdule-pickup.html" class="btn btn-theme px-4 rounded-pill">Order Now</a>
-            </div>
-          </div>
-          <div class="service-box">
-            <div class="service-box_wrapper">
-              <div class="service-box_img"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.jpg" alt="img"></div>
-              <div class="service-box_icon"><img src="<?= base_url('assets/frontend/') ?>images/service_box_4.svg" alt="Icon"></div>
-            </div>
-            <div class="box-content background-image" style="background-image: url('images/service_shape_1.png');">
-              <h3 class="box-title"><a href="schdule-pickup.html">Ironing/Pressing</a></h3>
-              <p class="service-box_text">Ironing or pressing is the process of using a heated iron or press to smooth out wrinkles, creases, and remove fabric</p><a href="schdule-pickup.html" class="btn btn-theme px-4 rounded-pill">Order Now</a>
-            </div>
-          </div>
+          <?php } } ?>
         </div>
       </div>
     </section>
