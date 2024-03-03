@@ -44,10 +44,10 @@
                             <span>CMS</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="<?= base_url('administrator/privacy_policy'); ?>">Policy Policy</a></li>
-                            <li><a href="<?= base_url('administrator/terms_conditions'); ?>">Terms Conditions</a></li>
-                            <li><a href="<?= base_url('administrator/refund_policy'); ?>">Refund Policy</a></li>
-                            <li><a href="<?= base_url('administrator/cancellation_policy'); ?>">Cancellation Policy</a></li>
+                            <li><a href="<?= base_url('administrator/Cms/privacy_policy'); ?>">Policy Policy</a></li>
+                            <li><a href="<?= base_url('administrator/Cms/terms_conditions'); ?>">Terms Conditions</a></li>
+                            <li><a href="<?= base_url('administrator/Cms/refund_policy'); ?>">Refund Policy</a></li>
+                            <li><a href="<?= base_url('administrator/Cms/cancellation_policy'); ?>">Cancellation Policy</a></li>
                         </ul>
                     </li>
                    
