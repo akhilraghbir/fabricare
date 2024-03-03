@@ -32,16 +32,16 @@
                             <input value="<?php if (isset($formData['service_name'])) { echo $formData['service_name'];} ?>" name="service_name" id="service_name" placeholder="Please Enter Service Name" autocomplete='off' type="text" class="form-control">
                         </div>
                     </div>
-                     <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Select Status<span class="text-danger"> *</span></label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="">Select Status</option>
-                                        <option value="Active" <?php if (isset($formData['status'])) { if($formData['status']=='Active') { echo 'selected';}else{ echo 'selected'; } } ?>>Active</option>
-                                        <option value="Inactive" <?php if (isset($formData['status'])) { if($formData['status']=='Inactive') { echo 'selected';}else{  } } ?>>In Active</option>
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Select Status<span class="text-danger"> *</span></label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="Active" <?php if (isset($formData['status'])) { if($formData['status']=='Active') { echo 'selected';}else{ echo 'selected'; } } ?>>Active</option>
+                                <option value="Inactive" <?php if (isset($formData['status'])) { if($formData['status']=='Inactive') { echo 'selected';}else{  } } ?>>In Active</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
