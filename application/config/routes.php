@@ -66,6 +66,12 @@ $route['load-contract-pdf/(:any)'] = 'Contracts/load_pdf/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['terms-and-conditions'] = 'home/terms_and_conditions';
+$route['refund-policy'] = 'home/refund_policy';
+$route['privacy-policy'] = 'home/privacy_policy';
+$route['cancellation-policy'] = 'home/cancellation_policy';
+$route['forgot-password'] = 'home/forgot_password';
+
 
 /* api routes */
 $route['api/user-login'] = 'api/api/user_login';

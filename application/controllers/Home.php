@@ -9,7 +9,7 @@ class Home extends CI_Controller {
     } 
 
     public function index(){
-        $data['sliders'] = $this->Common_model->getDataFromTable('tbl_banners','*', $whereField='status', $whereValue='Active', $orderBy='', $order='', $limit='', $offset=0, true);;
+        $data['sliders'] = $this->Common_model->getDataFromTable('tbl_banners','*', $whereField='status', $whereValue='Active', $orderBy='', $order='', $limit='', $offset=0, true);
         $data['services'] = $this->Common_model->getDataFromTable('tbl_services','*', $whereField='status', $whereValue='Active', $orderBy='', $order='', $limit='', $offset=0, true);
         $this->home_template->load('front_template','home',$data); 
     }
@@ -29,6 +29,29 @@ class Home extends CI_Controller {
     public function schedule_pickup(){
         $this->home_template->load('front_template','schedule_pickup');
     }
+
+    public function terms_and_conditions(){
+        $data['terms_conditions'] = $this->Common_model->getDataFromTable('tbl_cms','*', $whereField='desc_type', $whereValue='terms_conditions', $orderBy='', $order='', $limit='', $offset=0, true);
+        $this->home_template->load('front_template','terms_and_conditions',$data);
+    }
+    public function privacy_policy(){
+        $data['privacy_policy'] = $this->Common_model->getDataFromTable('tbl_cms','*', $whereField='desc_type', $whereValue='privacy_policy', $orderBy='', $order='', $limit='', $offset=0, true);
+        $this->home_template->load('front_template','privacy_policy',$data);
+    }
+    public function refund_policy(){
+        $data['refund_policy'] = $this->Common_model->getDataFromTable('tbl_cms','*', $whereField='desc_type', $whereValue='refund_policy', $orderBy='', $order='', $limit='', $offset=0, true);
+        $this->home_template->load('front_template','refund_policy',$data);
+    }
+    public function cancellation_policy(){
+        $data['cancellation_policy'] = $this->Common_model->getDataFromTable('tbl_cms','*', $whereField='desc_type', $whereValue='cancellation_policy', $orderBy='', $order='', $limit='', $offset=0, true);
+        $this->home_template->load('front_template','cancellation_policy',$data);
+    }
+
+
+    public function forgot_password(){
+        $this->home_template->load('front_template','forgotpassword');
+    }
+
 
     public function contact(){
         if($_POST)

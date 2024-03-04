@@ -1,78 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-<head>
-<title><?= SITENAME?> | <?= $title;?></title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-    <link rel="icon" href="<?= base_url();?>assets/backend/images/favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/bower_components/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= base_url();?>assets/backend/pages/waves/css/waves.min.css" type="text/css" media="all">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/icon/feather/css/feather.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/icon/themify-icons/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/icon/icofont/css/icofont.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/icon/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/css/style.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/backend/css/pages.css">
-</head>
-<body themebg-pattern="theme1"  class="login-bg" style="background-image:url('<?= base_url(); ?>assets/backend/images/login-bg-2.jpg')">
-    <div class="theme-loader">
-        <div class="loader-track">
-            <div class="preloader-wrapper">
-                <div class="spinner-layer spinner-blue">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="spinner-layer spinner-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="spinner-layer spinner-yellow">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-                <div class="spinner-layer spinner-green">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
+<section class="inner-banner services-banner">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="text-white">Forgot Password</h1>
+          </div>
         </div>
-    </div>
-    <section class="login-block">
+      </div>
+    </section>
+
+<section class="login-block mt-5 mb-5">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
@@ -119,5 +55,3 @@
     <script type="text/javascript" src="<?= base_url();?>assets/backend/bower_components/modernizr/js/modernizr.js"></script>
     <script type="text/javascript" src="<?= base_url();?>assets/backend/bower_components/modernizr/js/css-scrollbars.js"></script>
     <script type="text/javascript" src="<?= base_url();?>assets/backend/js/common-pages.js"></script>
-</body>
-</html>
