@@ -38,7 +38,13 @@
                             <input value="<?php if (isset($formData['zipcode'])) { echo $formData['zipcode'];} ?>" name="zipcode" id="zipcode" placeholder="Please Enter Zip Code" autocomplete='off' type="text" class="form-control">
                         </div>
                     </div>
-                     <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="service_charge" class="">Service Charge</label>
+                            <input value="<?php if (isset($formData['service_charge'])) { echo $formData['service_charge'];} ?>" name="service_charge" id="service_charge" placeholder="Please Enter Service Charge" autocomplete='off' type="text" class="form-control">
+                        </div>
+                    </div>
+                     <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Select Status</label>
                                     <select name="status" id="status" class="form-control">
@@ -79,7 +85,7 @@
                                         <th>S.No</th>
                                         <th>Area Name</th>
                                         <th>Zip Code</th>
-                                        
+                                        <th>Service Charge</th>
                                         
                                         <th>Status</th>
                                         <th>Created On</th>

@@ -39,7 +39,7 @@ class Zipcodes extends CI_Controller {
 		if(($this->input->post('add'))){		
 			$this->form_validation->set_session_data($this->input->post());
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('area_name','zipcode');    
+			$mandatoryFields=array('area_name','zipcode','service_charge');    
 			
             foreach($mandatoryFields as $row){
 				$fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
@@ -81,7 +81,7 @@ class Zipcodes extends CI_Controller {
 		if(($this->input->post('edit'))){
 
 			$this->form_validation->checkXssValidation($this->input->post());
-			$mandatoryFields=array('area_name','zipcode');       
+			$mandatoryFields=array('area_name','zipcode','service_charge');       
             foreach($mandatoryFields as $row){
             $fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
             $this->form_validation->set_rules($row, $fieldname, 'required'); 
@@ -149,8 +149,8 @@ class Zipcodes extends CI_Controller {
 		$status         =  $this->input->post('status');
 		
 		$indexColumn='id';
-		$selectColumns=array('id','area_name','zipcode','status','created_on');
-		$dataTableSortOrdering=array('id','area_name','zipcode','status','created_on');
+		$selectColumns=array('id','area_name','zipcode','service_charge','status','created_on');
+		$dataTableSortOrdering=array('id','area_name','zipcode','service_charge','status','created_on');
 		$table_name='tbl_zipcodes';
 		$joinsArray=array();
 		$wherecondition='id!="0"';
@@ -177,14 +177,14 @@ class Zipcodes extends CI_Controller {
 				$recordListing[$i][0]= $i+1;
                 $recordListing[$i][1]= $recordData->area_name;
                 $recordListing[$i][2]= $recordData->zipcode;
-               
+				$recordListing[$i][3]= $recordData->service_charge;
 				
 				if($recordData->status == 'Inactive'){
-					$recordListing[$i][3]= '<span class="badge rounded-pill bg-danger">'.$recordData->status.'</span>';
+					$recordListing[$i][4]= '<span class="badge rounded-pill bg-danger">'.$recordData->status.'</span>';
 				}else{
-					$recordListing[$i][3]= '<span class="badge rounded-pill bg-success">'.$recordData->status.'</span>';
+					$recordListing[$i][4]= '<span class="badge rounded-pill bg-success">'.$recordData->status.'</span>';
 				}
-                $recordListing[$i][4]= displayDateInWords($recordData->created_on);
+                $recordListing[$i][5]= displayDateInWords($recordData->created_on);
 				if($this->session->userdata('user_type') == 'Admin'){	
 					if($recordData->status == 'Inactive'){
 						$action.= '<a class="btn" title="Active" onclick="statusUpdate(this,'."'$recordData->id'".','."'Active'".')" style="margin-bottom: 2px;color:green;font-size: 16px;cursor:pointer;"><i class="ri-check-line"></i></a>';
@@ -193,7 +193,7 @@ class Zipcodes extends CI_Controller {
 					}
 				}
 				$action.= '<a href="'.CONFIG_SERVER_ADMIN_ROOT.'zipcodes/edit/'.$recordData->id.'" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill" aria-hidden="true"></i></a>';
-				$recordListing[$i][5]= $action;
+				$recordListing[$i][6]= $action;
 				$i++;
                 $srNumber++;
             }
