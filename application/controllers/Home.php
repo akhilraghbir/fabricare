@@ -44,6 +44,7 @@ class Home extends CI_Controller {
         }
         $listData = $this->Datatables_model->getDataFromDB($selectColumns,$dataTableSortOrdering,$table_name,$joinsArray,$whereCondition,$indexColumn,'',$orderByColumn,$sortType,true,'POST');
         $data['items'] = $listData['data'];
+        $data['address'] = $this->Common_model->getDataFromTable('tbl_addresses','*',  $whereField=array('user_id'=>userLoggedIn(),'pincode'=>$this->session->pincode_id), $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
         $this->home_template->load('front_template','cart',$data);        
     }
 
@@ -114,6 +115,7 @@ class Home extends CI_Controller {
             $checkPincode = $this->Common_model->getDataFromTable('tbl_zipcodes','id,zipcode,service_charge',  $whereField=$where, $whereValue='', $orderBy='', $order='', $limit='', $offset=0, true);
             if(is_array($checkPincode) && count($checkPincode)>0){
                 $data['service_charge'] = $checkPincode[0]['service_charge'];
+                $data['pincode_id'] = $checkPincode[0]['id'];
                 $this->session->set_userdata($data);
                 $res['error'] = 0;
             }else{
@@ -201,10 +203,165 @@ class Home extends CI_Controller {
             $del = $this->Common_model->deleteRowFromTable('tbl_cart', $field='id', $ID=$cartId, $limit=0);
             if($del){
                 $res['error'] = 0;
+                $res['html'] = $this->getCartPriceDetails();
             }else{
                 $res['error'] = 1;
             }
             echo json_encode($res);
+        }
+    }
+
+    public function updateCart(){
+        if($_POST){
+            $data['quantity'] = $_POST['qty'];
+            $id = $_POST['cart_id'];
+            $upd = $this->Common_model->updateDataFromTabel('tbl_cart',$data,'id',$id);
+            if($upd){
+                $res['error'] = 0;
+                $res['html'] = $this->getCartPriceDetails();
+            }else{
+                $res['error'] = 1;
+            }
+            echo json_encode($res);exit;
+        }
+    }
+
+    public function manage_addresses(){
+        check_FUserSession();
+        $data['meta_title'] = "Manage Address";
+        $data['meta_keywords'] = SITENAME;
+        $data['meta_description'] = SITENAME;
+        $data['addresses'] = $this->Common_model->getDataFromTable('tbl_addresses','*',  $whereField=array('user_id'=>userLoggedIn()), $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+        $this->home_template->load('front_template','manage_address',$data); 
+    }
+    
+    public function add_address(){
+        check_FUserSession();
+        $data['meta_title'] = "Add Address";
+        $data['meta_keywords'] = SITENAME;
+        $data['meta_description'] = SITENAME;
+        if($_POST){
+            $this->form_validation->set_session_data($this->input->post());
+			$this->form_validation->checkXssValidation($this->input->post());
+             $mandatoryFields=array('address_title','name','phone_number','email_address','address1','pincode');    
+            foreach($mandatoryFields as $row){
+				$fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
+				$this->form_validation->set_rules($row, $fieldname, 'required'); 
+            }
+            if($this->form_validation->run() == FALSE){
+				$this->form_validation->set_session_data($this->input->post());
+			     $errorMessage=validation_errors();
+			    $this->session->set_flashdata('emsg',$errorMessage);
+               redirect(base_url('add-address'));
+			}else{
+                foreach($this->input->post() as $fieldname=>$fieldvalue){
+                    $insdata[$fieldname]= $this->input->post($fieldname);
+                }
+                unset($insdata['submit']);
+                $insdata['user_id'] = userLoggedIn();
+                $insdata['created_on'] = date('Y-m-d h:i:s');
+                $ins = $this->Common_model->addDataIntoTable('tbl_addresses',$insdata);
+                if($ins){
+                    $this->session->set_flashdata('smsg','Address Saved Successfully');
+                    redirect(base_url('manage-address'));
+                }
+			}
+        }
+        $data['pincodes'] = $this->Common_model->getDataFromTable('tbl_zipcodes','id,zipcode',  $whereField=['status'=>'Active'], $whereValue='', $orderBy='', $order='', $limit='', $offset=0, true);
+        $this->home_template->load('front_template','add_address',$data);
+    }
+    
+    public function edit_address($id){
+        check_FUserSession();
+        if(!empty($id)){
+            $data['meta_title'] = "Edit Address";
+            $data['meta_keywords'] = SITENAME;
+            $data['meta_description'] = SITENAME;
+            if($_POST){
+            $this->form_validation->set_session_data($this->input->post());
+			$this->form_validation->checkXssValidation($this->input->post());
+            $mandatoryFields=array('address_title','name','phone_number','email_address','address1','pincode'); 
+            foreach($mandatoryFields as $row){
+				$fieldname = ucwords(strtolower(str_replace("_", " ", $row)));
+				$this->form_validation->set_rules($row, $fieldname, 'required'); 
+            }
+            if($this->form_validation->run() == FALSE){
+				$this->form_validation->set_session_data($this->input->post());
+			     $errorMessage=validation_errors();
+			    $this->session->set_flashdata('emsg',$errorMessage);
+               redirect(base_url('edit-address/'.$id));
+			}else{
+                foreach($this->input->post() as $fieldname=>$fieldvalue){
+                    $insdata[$fieldname]= $this->input->post($fieldname);
+                }
+                unset($insdata['submit']);
+                $ins = $this->Common_model->updateDataFromTabel('tbl_addresses',$insdata,'id',$id);
+                if($ins){
+                    $this->session->set_flashdata('smsg','Address Saved Successfully');
+                    redirect(base_url('manage-address'));
+                }
+			}
+        }
+            $data['address'] = $this->Common_model->getDataFromTable('tbl_addresses','*',  $whereField=array('user_id'=>userLoggedIn(),'id'=>$id), $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+            $data['pincodes'] = $this->Common_model->getDataFromTable('tbl_zipcodes','id,zipcode',  $whereField=['status'=>'Active'], $whereValue='', $orderBy='', $order='', $limit='', $offset=0, true);
+            $this->home_template->load('front_template','add_address',$data);
+        }
+    }
+    
+    public function delete_address($id){
+        check_FUserSession();
+        if(!empty($id)){
+            $del = $this->Common_model->deleteRowFromTable('tbl_addresses','id',$id,0);
+            if($del){
+                $this->session->set_flashdata('smsg','Address Delete Successfully');
+                redirect(base_url('manage-address'));
+            }
+        }
+    }
+
+    public function getCartPriceDetails(){
+        $userid = userLoggedIn();
+        if($userid){
+            $whereCondition['user_id']  = $userid;
+        }else{
+            $whereCondition['session_id'] = sessionId();
+        }
+        $data['service_charge'] = $this->session->service_charge;
+        $data['items'] = $this->Common_model->getDataFromTable('tbl_cart','*',  $whereField=$whereCondition, $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+        return $html = $this->load->view('price_details',$data,true);
+    }
+
+    public function coupons(){
+        check_FUserSession();
+        $data['meta_title'] = "My Coupons";
+        $data['meta_keywords'] = SITENAME;
+        $data['meta_description'] = SITENAME;
+        $whr['from_date<='] = date('Y-m-d');
+        $whr['to_date>='] = date('Y-m-d');
+        $data['coupons'] = $this->Common_model->getDataFromTable('tbl_promocodes','*',  $whereField=$whr, $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+        $this->home_template->load('front_template','coupons',$data);
+    }
+
+    public function applyCoupon(){
+        if($_POST){
+            $sub_total = $_POST['sub_total'];
+            $where['promocode'] = $_POST['coupon'];
+            $where['from_date<='] = date('Y-m-d');
+            $where['to_date>='] = date('Y-m-d');
+            $coupons = $this->Common_model->getDataFromTable('tbl_promocodes','*',  $whereField=$where, $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+            if(is_array($coupons) && count($coupons)>0){
+                $mincart = $coupons[0]['min_cart_value'];
+                if($mincart!=null && $sub_total<$mincart){
+                    $res['error'] = 1;
+                    $res['msg'] = '<span class="text-danger">Min Bag value should be '.$mincart.'</span>';        
+                }else{
+                    
+                }
+            }else{
+                $res['error'] = 1;
+                $res['msg'] = '<span class="text-danger">Invalid Coupon</span>';
+            }
+            echo json_encode($res);exit;
         }
     }
 }

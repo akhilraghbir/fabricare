@@ -300,3 +300,19 @@ if (!function_exists('timeDifference')) {
         }
     }
 }
+
+function check_FUserSession() {
+	$ci = get_instance();
+	if ($ci->session->userdata('is_login') != TRUE) {
+		$ci->session->sess_destroy();
+		$ci->session->set_flashdata('emsg','Login Authentication is needed');
+		redirect(base_url('login'));
+	}
+	
+	if($ci->session->userdata('user_type')!='User'){
+		$ci->session->sess_destroy();
+		$ci->session->set_flashdata('emsg','Login Authentication is needed');
+		redirect(base_url('login'));
+	}
+
+}

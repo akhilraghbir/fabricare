@@ -149,20 +149,29 @@ function updatecart(pid,sid,price,cart_id){
   var qty = $(".quantity_"+pid+"_"+sid+" option:selected").val();
   var total = qty*price;
   $(".price_"+cart_id).text(total.toFixed(2));
+  $.ajax({
+    url: baseurl+'updateCart',
+    type: 'POST',
+    data: {cart_id:cart_id,qty:qty},
+    beforeSend:function(){
+      
+    },
+    success: function(data) {
+        var res = JSON.parse(data);
+        if(res.error==0){
+          $(".card-price-details").html(res.html);
+        }
+    },
+    error: function(e) {
+        console.log(e.message);
+    }
+  });
 }
 
 function removeCart(cart_id){
   if(cart_id!=''){
-    var price = $(".price_"+cart_id).text();
-    var total = $(".grand_total").text();
-    var sub_total = $(".sub_total").text();
-    $(".product-card_"+cart_id).remove();
-    var ptotal = total - price;
-    var st = sub_total - price;
-    $(".sub_total").text(st.toFixed(2));
-    $(".grand_total").text(ptotal.toFixed(2));
+    $(".product-card_"+cart_id).fadeOut(200);
     var len = $(".product-card").length;
-    $(".itemscount").text('('+len+' Items)');
     if(len==0){
       $(".item-div").addClass('d-none');
       $(".no-item-div").removeClass('d-none');
@@ -177,6 +186,7 @@ function removeCart(cart_id){
       success: function(data) {
           var res = JSON.parse(data);
           if(res.error==0){
+            $(".card-price-details").html(res.html);
             getCartCount();
           }
       },
@@ -206,3 +216,38 @@ function getCartCount(){
     });
 }
 getCartCount();
+
+function applyCoupon(){
+  var coupon = $(".coupon").val();
+  var sub_total = $(".sub_total").text();
+  if(coupon!=''){
+    $.ajax({
+      url: baseurl+'applyCoupon',
+      type: 'POST',
+      data: {coupon:coupon,sub_total:sub_total},
+      beforeSend:function(){
+        $(".coupon_response").html("<span class='text-info'>Please wait...</span>");
+      },
+      success: function(data) {
+          var res = JSON.parse(data);
+          if(res.error==0 && res.html!=''){
+            $(".card-price-details").html(res.html);
+          }
+          $(".coupon_response").html(res.msg);
+      },
+      error: function(e) {
+          console.log(e.message);
+      }
+    });
+  }else{
+    $(".coupon").focus();
+  }
+}
+
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}

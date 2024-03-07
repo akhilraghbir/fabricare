@@ -56,19 +56,24 @@ $route['contact'] = 'home/contact';
 $route['services'] = 'home/services';
 $route['cart'] = 'home/cart';
 $route['about'] = 'home/about';
+$route['coupons'] = 'home/coupons';
 $route['schedule-pickup'] = 'home/schedule_pickup';
 $route['validatePincode'] = 'home/validatePincode';
+$route['manage-address'] = 'home/manage_addresses';
+$route['add-address'] = 'home/add_address';
+$route['edit-address/(:num)'] = 'home/edit_address/$1';
+$route['delete-address/(:num)'] = 'home/delete_address/$1';
 $route['getProducts'] = 'home/getProducts';
 $route['addtocart'] = 'home/addtocart';
 $route['removecart'] = 'home/removecart';
+$route['updateCart'] = 'home/updateCart';
+$route['applyCoupon'] = 'home/applyCoupon';
 $route['getCartCount'] = 'home/getCartCount';
 $route['activate-account/(:any)'] = 'register/activate_account/$1';
 $route['doLogout'] = 'register/logout';
 $route['admin'] = 'login';
 $route['forgot-password'] = 'login/forgotPassword';
 $route['administrator/dashboard'] = 'administrator/dashboard';
-$route['sign-contract/(:any)'] = 'Contracts/view/$1';
-$route['load-contract-pdf/(:any)'] = 'Contracts/load_pdf/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -80,27 +85,10 @@ $route['forgot-password'] = 'home/forgot_password';
 
 
 /* api routes */
+$route['api/user-register'] = 'api/api/user_register';
 $route['api/user-login'] = 'api/api/user_login';
 $route['api/forgot-password'] = 'api/api/forgot_password';
 $route['api/reset-password'] = 'api/api/reset_password';
-$route['api/get-financial-years'] = 'api/dashboard/financial_years';
-$route['api/get-categories'] = 'api/dashboard/categories';
-$route['api/add-bill'] = 'api/dashboard/addBill';
-$route['api/update-bill'] = 'api/dashboard/updateBill';
-$route['api/list-bills'] = 'api/dashboard/listBills';
-$route['api/get-bill'] = 'api/dashboard/getBill';
-$route['api/delete-bill'] = 'api/dashboard/deleteBill';
-$route['api/delete-attachment'] = 'api/dashboard/deleteAttachment';
-$route['api/get-profile'] = 'api/dashboard/getProfile';
-$route['api/update-profile'] = 'api/dashboard/updateProfile';
-$route['api/update-password'] = 'api/dashboard/updatePasswod';
-$route['api/post-enquiry'] = 'api/dashboard/postEnquiry';
-$route['api/settings/(:any)'] = 'api/dashboard/getSettings/$1';
-$route['api/add-tform'] = 'api/dashboard/addTform';
-$route['api/get-tform'] = 'api/dashboard/getTform';
-$route['api/list-tform'] = 'api/dashboard/listTforms';
-$route['api/pie-chart'] = 'api/dashboard/dashboardPiechart';
-$route['api/bar-graph'] = 'api/dashboard/dashboardBargraph';
-$route['api/add-attachments'] = 'api/dashboard/addAttachments';
 
-
+$route['api/getBanners'] = 'api/dashboard/get_banners';
+$route['api/getZipcodes'] = 'api/dashboard/get_zipcodes';

@@ -43,11 +43,24 @@
             </div>
           </div>
           <div class="col-md-3">
-            <div class="card cart-card shadow-sm mb-4">
+            <div class="card shadow-sm mb-4">
+              <div class="card-header">
+                <div class="card-title text-secondary fw-bold">Select Address</div>
+                  <select name="address_id" class="form-control">
+                    <option value="">Select Address</option>
+                    <?php if(is_array($address) && count($address)){ 
+                      foreach($address as $addr){
+                    ?>
+                      <option value="<?= $addr['id'];?>"><?= $addr['address_title'];?></option>
+                    <?php } }?>
+                  </select>
+              </div>
+            </div>
+            <div class="card cart-card card-price-details shadow-sm mb-4">
               <div class="card-header">
                 <span class="text-secondary card-title fw-bold">PRICE DETAILS</span>
               </div>
-              <div class="card-body">
+              <div class="card-body ">
                 <table class="table table-borderless mb-0">
                   <tbody>
                     <tr>
@@ -73,12 +86,11 @@
                 </div>
               </div>
               <div class="card-body">
-                <form>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Enter Coupon Here" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-theme" type="button" id="button-addon2">Apply</button>
+                    <input type="text" class="form-control coupon" placeholder="Enter Coupon Here" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-theme" type="button" onclick="applyCoupon()" id="button-addon2">Apply</button>
                   </div>
-                </form>
+                  <p class="coupon_response"></p>
               </div>
             </div>
             <button class="btn btn-lg btn-theme my-3 w-100 rounded-pill">Place Order</button>

@@ -57,6 +57,8 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li><a href="<?= base_url('manage-address'); ?>" class="dropdown-item">My Addresses</a></li>
+                <li><a href="<?= base_url('coupons'); ?>" class="dropdown-item">Coupons</a></li>
                 <li><a class="dropdown-item" href="#">Orders History</a></li>
                 <li><a class="dropdown-item" href="<?= base_url('doLogout');?>">Logout</a></li>
               </ul>
