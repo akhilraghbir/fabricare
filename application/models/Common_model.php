@@ -45,7 +45,7 @@ class Common_model extends CI_Model{
 		if($whereNotIn > 0){
 			$this->db->where_not_in($whereField, $whereValue);
 		}else{
-			$whereValue = stripslashes($whereValue);
+			$whereValue = $whereValue;
 			$this->db->where_in($whereField, $whereValue,false);
 		}
 
@@ -655,49 +655,19 @@ class Common_model extends CI_Model{
 		   return $result;
 	}
 
-	public function getStockQty($productid = '',$warehouseid='',$date=''){
-		if($productid!='' && $warehouseid!=''){
-			$sql = "Select product_id,SUM(CASE When type='Purchase' Then quantity Else 0 End ) as purchaseqty, SUM(CASE When type='Sale' Then quantity Else 0 End ) as saleqty, SUM(CASE When type='Transfer_Debit' Then quantity Else 0 End ) as td, SUM(CASE When type='Transfer_Credit' Then quantity Else 0 End ) as tc from tbl_stock_entries where product_id='".$productid."' and warehouse_id='".$warehouseid."'";
-			$query = $this->db->query($sql)->result_array();
-			$stock = ($query[0]['purchaseqty'] - $query[0]['saleqty'] - $query[0]['td']) + $query[0]['tc'];
+	public function getProductServiceWithPrices($productids = ''){
+		$res = [];
+		if($productids!=''){
+			$services = $this->db->query("select tps.product_id,ts.id,ts.service_name,tps.price from tbl_services as ts left join tbl_product_services as tps on ts.id = tps.service_id where tps.product_id in ('$productids')")->result_array();
 		}else{
-			$where = "1=1";
-			if($warehouseid!=''){
-				$where.= ' and warehouse_id='.$warehouseid;
-			}
-			if($date!=''){
-				$date = explode("-",$date);
-				$fromDate = date("Y-m-d",strtotime($date[0]));
-				$toDate = date("Y-m-d",strtotime($date[1]));
-				$where.= " and date(created_on) between '$fromDate' and '$toDate'";
-			}
-			$sql = "Select product_id,SUM(CASE When type='Purchase' Then quantity Else 0 End ) as purchaseqty, SUM(CASE When type='Sale' Then quantity Else 0 End ) as saleqty , SUM(CASE When type='Transfer_Debit' Then quantity Else 0 End ) as td, SUM(CASE When type='Transfer_Credit' Then quantity Else 0 End ) as tc from tbl_stock_entries where $where GROUP by product_id";
-			$query = $this->db->query($sql)->result_array();
-			foreach($query as $res){
-				$stock[$res['product_id']] = ($res['purchaseqty'] - $res['saleqty'] - $res['td']) +  $res['tc'];
+			$services = $this->db->query("select tps.product_id,ts.id,ts.service_name,tps.price from tbl_services as ts left join tbl_product_services as tps on ts.id = tps.service_id")->result_array();
+		}
+		if(is_array($services) && count($services)>0){
+			foreach($services as $service){
+				$res[$service['product_id']][] = $service;
 			}
 		}
-		return $stock;
-	}
-
-
-	public function productsSales(){
-		$sql = "select product_id,sum(quantity) as totqty,avg(price) as avgsaleprice from tbl_invoice_items group by product_id";
-		$query = $this->db->query($sql)->result_array();
-		foreach($query as $res){
-			$sales[$res['product_id']]['qty'] = $res['totqty'];
-			$sales[$res['product_id']]['avgprice'] = $res['avgsaleprice'];
-		}
-		return $sales;
-	}
-
-	public function productsPurchase(){
-		$sql = "select product_id,avg(price) as avgpurchaseprice from tbl_purchase_items group by product_id";
-		$query = $this->db->query($sql)->result_array();
-		foreach($query as $res){
-			$purchase[$res['product_id']]['avgprice'] = $res['avgpurchaseprice'];
-		}
-		return $purchase;
+		return $res;
 	}
 }
 

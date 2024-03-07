@@ -23,8 +23,7 @@ class Login_model extends CI_Model
                 return "Status Error";
             }else{
                 $logindata['name'] = $data[0]->first_name;
-                $logindata['client_type'] = $data[0]->client_type;
-                
+                $logindata['user_type'] = $data[0]->user_type;
                 $logindata['id'] = $data[0]->id;
                 $logindata['is_login'] = TRUE;
                 $this->session->set_userdata($logindata);
@@ -44,7 +43,7 @@ class Login_model extends CI_Model
         $this->db->from('tbl_users');
         $this->db->where('username',$username); 
         $this->db->where('password',$password);
-        $this->db->where('user_type','Client');
+        $this->db->where('user_type','User');
         $this->db->limit(1);
         $query = $this->db->get();   
         if($query->num_rows() == 1){                 
@@ -56,9 +55,8 @@ class Login_model extends CI_Model
                 $this->db->where('id',$data[0]->id);
                 $this->db->update('tbl_users',['device_token' => $device_token]);
                 $logindata['name'] = $data[0]->first_name;
-                $logindata['client_type'] = $data[0]->client_type;
+                $logindata['user_type'] = $data[0]->user_type;
                 $logindata['id'] = $data[0]->id;
-                $logindata['client_type'] = $data[0]->client_type;
                 $logindata['is_login'] = TRUE;
                 $this->session->set_userdata($logindata);
                 return 'Success';

@@ -28,7 +28,7 @@ class Categories extends CI_Controller {
 		$data['breadcrumbs'] = $this->loadBreadCrumbs();
 		$data['data'] = $formContent;
 		$data['form_action'] = $formName;
-		$data['categories'] = $this->Common_model->getDataFromTable('tbl_categories','',  $whereField='parent_id', $whereValue=null, $orderBy='', $order='', $limit='', $offset=0, true);
+		$data['categories'] = $this->Common_model->getDataFromTable('tbl_categories','',  $whereField='parent_id', $whereValue=0, $orderBy='', $order='', $limit='', $offset=0, true);
 		$this->home_template->load('home_template','admin/categories',$data); 
 	}
 

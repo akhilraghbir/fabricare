@@ -47,7 +47,7 @@
 
         <span class="position-relative">
           <a href="<?= base_url('cart');?>" class="text-theme-light cart ps-4"><i class="bi bi-bag"></i></a>
-          <span class="cart-count">1</span>
+          <span class="cart-count">0</span>
         </span>
         <span class="userlogin">
           <?php if(loggedId()){ ?>
@@ -58,7 +58,7 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">My Profile</a></li>
                 <li><a class="dropdown-item" href="#">Orders History</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li><a class="dropdown-item" href="<?= base_url('doLogout');?>">Logout</a></li>
               </ul>
             </span>
             <?php } else{ ?>

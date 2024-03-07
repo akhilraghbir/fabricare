@@ -43,6 +43,27 @@
 		 }
 	}
 
+	if(!function_exists('userLoggedIn')){
+		function userLoggedIn(){
+		   $CI = get_instance();
+		   $userId  = $CI->session->userdata('id');
+		   $role = $CI->session->userdata('user_type');
+		   if($userId>0 && $role=='User'){
+			   return $userId;
+		   }
+		   else{
+			   return FALSE;
+		   }
+		}
+   }
+
+	if(!function_exists('sessionId')){
+		function sessionId(){
+			return session_id();
+		}
+	}
+   
+
 	if(!function_exists('emailId')){
 		 function emailId(){
 			$CI = get_instance();

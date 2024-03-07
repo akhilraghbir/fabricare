@@ -21,7 +21,7 @@
                     </li>
                 <li class="<?= ($modulename == 'Categories') ? 'mm-active' : ''; ?>">
                     <a href="<?= base_url('administrator/Categories'); ?>" class="waves-effect">
-                        <i class="ri-list-fill"></i>
+                        <i class="ri-file-list-3-fill"></i>
                         <span>Categories</span>
                     </a>
                 </li>

@@ -18,11 +18,11 @@
                 <?php
                 if (isset($formData['id'])) {
                     $id = $formData['id'];
-                    $url = CONFIG_SERVER_ADMIN_ROOT . "inventory/edit/$id";
+                    $url = CONFIG_SERVER_ADMIN_ROOT . "products/edit/$id";
                 } else {
-                    $url = CONFIG_SERVER_ADMIN_ROOT . "inventory/add";
+                    $url = CONFIG_SERVER_ADMIN_ROOT . "products/add";
                 }
-                echo form_open($url, array('class' => 'inventory', 'id' => 'inventory')); ?>
+                echo form_open($url, array('class' => 'products', 'id' => 'products')); ?>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -35,93 +35,50 @@
                     </div>
                     <div class="col-md-6 ">
                         <div class="mb-3">
-                            <label for="last name" class="">Units <span class="text-danger">*</span></label>
-                            <select name="units" class="form-control">
-                                <option value="">Select Unit</option>
-                                <?php foreach($units as $unit){ ?>
-                                    <option value="<?= $unit['id'];?>" <?php if(isset($formData) && ($formData['units']==$unit['id'])){ echo "selected"; } ?>><?= $unit['unit_name'];?></option>
+                            <label for="last name" class="">Category <span class="text-danger">*</span></label>
+                            <select name="category_id" class="form-control">
+                                <option value="">Select Category</option>
+                                <?php foreach($categories as $category){ ?>
+                                    <option value="<?= $category['id'];?>" <?php if(isset($formData) && ($formData['category_id']==$category['id'])){ echo "selected"; } ?>><?= $category['category'];?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="is_catalytic" class="">Is Catalytic <span class="text-danger">*</span></label>
-                            <select name="is_catalytic" id="is_catalytic" class="form-control">
-                                <option value="No" <?php if(isset($formData) && ($formData['is_catalytic']=='No')){ echo "selected"; } ?>>No</option>
-                                <option value="Yes" <?php if(isset($formData) && ($formData['is_catalytic']=='Yes')){ echo "selected"; } ?>>Yes</option>
+                            <label for="exampleEmail11" class="">Image</label>
+                            <input type="file" class="image_element form-control border" >
+                            <input type="hidden" id="image"  class="main_image" value="<?php if(isset($formData)){ echo $formData['image']; } ?>" name="image">
+                            <ul id="imageUploadedDoc">
+                            <?php if(isset($formData) && $formData['image']!=''){ ?>
+                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['image']); ?>')" >View</a>
+                            <?php } ?>
+                            </ul>
+                            <div style="display:none" class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Select Status<span class="text-danger"> *</span></label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="Active" <?php if (isset($formData['status'])) { if($formData['status']=='Active') { echo 'selected';}else{ echo 'selected'; } } ?>>Active</option>
+                                <option value="Inactive" <?php if (isset($formData['status'])) { if($formData['status']=='Inactive') { echo 'selected';}else{  } } ?>>In Active</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3 ferrous_div <?= (isset($formData) && ($formData['is_catalytic']=='Yes')) ? 'd-none' : '' ?>">
-                        <div class="mb-3">
-                            <label for="is_ferrous" class="">Is Ferrous <span class="text-danger">*</span></label>
-                            <select name="is_ferrous" id="is_ferrous" class="form-control">
-                                <option value="No" <?php if(isset($formData) && ($formData['is_ferrous']=='No')){ echo "selected"; } ?>>No</option>
-                                <option value="Yes" <?php if(isset($formData) && ($formData['is_ferrous']=='Yes')){ echo "selected"; } ?>>Yes</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3 ferrous_div <?= (isset($formData) && ($formData['is_catalytic']=='Yes')) ? 'd-none' : '' ?>">
-                        <div class="mb-3">
-                            <label for="buyer_price" class="">Buyer Price <span class="text-danger">*</span></label>
-                            <input value="<?php if (isset($formData['buyer_price'])) { echo $formData['buyer_price']; } ?>" name="buyer_price" id="buyer_price" placeholder="Please Enter Buyer Price" autocomplete='off' type="text" class="Onlynumbers form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-3 ferrous_div <?= (isset($formData) && ($formData['is_catalytic']=='Yes')) ? 'd-none' : '' ?>">
-                        <div class="mb-3">
-                            <label for="tier_price" class="">Tier Price <span class="text-danger">*</span></label>
-                            <input value="<?php if (isset($formData['tier_price'])) { echo $formData['tier_price']; } ?>" name="tier_price" id="tier_price" placeholder="Please Enter Tier Price" autocomplete='off' type="text" class="Onlynumbers form-control">
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="exampleEmail11" class="">Main Image</label>
-                            <input type="file" class="main_image_element form-control border" >
-                            <input type="hidden" id="main_image"  class="main_image" value="<?php if(isset($formData)){ echo $formData['main_image']; } ?>" name="main_image">
-                            <ul id="main_imageUploadedDoc">
-                            <?php if(isset($formData) && $formData['main_image']!=''){ ?>
-                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['main_image']); ?>')" >View</a>
-                            <?php } ?>
-                            </ul>
-                            <div style="display:none" class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="exampleEmail11" class="">Zoom Image</label>
-                            <input type="file" class="zoom_image_element form-control border" >
-                            <input type="hidden" id="zoom_image"  class="zoom_image" value="<?php if(isset($formData)){ echo $formData['zoom_image']; } ?>" name="zoom_image">
-                            <ul id="zoom_imageUploadedDoc">
-                            <?php if(isset($formData) && $formData['zoom_image']!=''){ ?>
-                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['zoom_image']); ?>')" >View</a>
-                            <?php } ?>
-                            </ul>
-                            <div style="display:none" class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="exampleEmail11" class="">Wide Image</label>
-                            <input type="file" class="wide_image_element form-control border" >
-                            <input type="hidden" id="wide_image"  class="wide_image" value="<?php if(isset($formData)){ echo $formData['wide_image']; } ?>" name="wide_image">
-                            <ul id="wide_imageUploadedDoc">
-                            <?php if(isset($formData) && $formData['wide_image']!=''){ ?>
-                                <a href='javascript:void(0)' onclick="openimage('<?= base_url($formData['wide_image']); ?>')" >View</a>
-                            <?php } ?>
-                            </ul>
-                            <div style="display:none" class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-primary" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+                <div class="services">
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-sm btn-info" onclick="addNewService()"><i class="ri-add-circle-fill"></i></button>
                     </div>
                 </div>
                 <div>
@@ -137,47 +94,40 @@
             </div>
         </div>
 <script>
-    $('.main_image_element').change(function() {
+    $('.image_element').change(function() {
         formdata = new FormData();
         var path = "uploads/products/";
         if ($(this).prop('files').length > 0) {
             file = $(this).prop('files')[0];
             formdata.append("file", file);
             formdata.append("path", path);
-            $(".main_image_element").val('');
-            uploadDocs(formdata, 'main_imageUploadedDoc', 'main_image');
+            $(".image_element").val('');
+            uploadDocs(formdata, 'imageUploadedDoc', 'main_image');
         }
     });
-    $('.zoom_image_element').change(function() {
-        formdata = new FormData();
-        var path = "uploads/products/";
-        if ($(this).prop('files').length > 0) {
-            file = $(this).prop('files')[0];
-            formdata.append("file", file);
-            formdata.append("path", path);
-            $(".zoom_image_element").val('');
-            uploadDocs(formdata, 'zoom_imageUploadedDoc', 'zoom_image');
-        }
-    });
-    $('.wide_image_element').change(function() {
-        formdata = new FormData();
-        var path = "uploads/products/";
-        if ($(this).prop('files').length > 0) {
-            file = $(this).prop('files')[0];
-            formdata.append("file", file);
-            formdata.append("path", path);
-            $(".wide_image_element").val('');
-            uploadDocs(formdata, 'wide_imageUploadedDoc', 'wide_image');
-        }
-    });
-    $("#is_catalytic").change(function(){
-        var is_catalytic = $(this).val();
-        if(is_catalytic == 'Yes'){
-            $(".ferrous_div").addClass('d-none');
-        }else{
-            $(".ferrous_div").removeClass('d-none');
-        }
-    });
+    function addNewService(id=''){
+        $.ajax({
+           type:'post',
+           url:base_url+'administrator/products/addService',
+           data:{id:id},
+           beforeSend:function(){
+
+           },
+           success:function(res){
+            var res = JSON.parse(res);
+            if(res.error ==0){
+                $(".services").append(res.html);
+            }
+           }
+        });
+    }
+    
+    function deleteRow(id){
+        $(".row_"+id).remove();
+    }
+    <?php if (isset($formData['id'])) { ?>
+        addNewService(<?= $formData['id']?>);
+    <?php } ?>
 </script>
     <?php } else { ?>
         <div class="row">
@@ -203,15 +153,13 @@
                         </div>
                         <hr>
                         <div class="table-responsive tasks dataGridTable">
-                            <table id="invetoryList" class="table card-table table-vcenter text-nowrap mb-0 border nowrap" style="width:100%">
+                            <table id="productsList" class="table card-table table-vcenter text-nowrap mb-0 border nowrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
                                         <th>Product Name</th>
-                                        <th>Units</th>
-                                        <th>Is Ferrous</th>
-                                        <th>Buyer Price</th>
-                                        <th>Tier Price</th>
+                                        <th>Image</th>
+                                        <th>Category</th>
                                         <th>Status</th>
                                         <th>Created On</th>
                                         <th>Action</th>
@@ -233,16 +181,16 @@
 <script type="text/javascript">
     function getdata() {
         var status = $("#status").val();
-        var clist = $('#invetoryList').DataTable({
+        var clist = $('#productsList').DataTable({
             "destroy": true,
             "responsive": false,
             "processing": true,
             "serverSide": true,
             "order": [
-                [1, "asc"]
+                [6, "asc"]
             ],
             "ajax": {
-                "url": "<?php echo CONFIG_SERVER_ADMIN_ROOT ?>inventory/ajaxListing",
+                "url": "<?php echo CONFIG_SERVER_ADMIN_ROOT ?>products/ajaxListing",
                 "type": 'POST',
                 'data': {
                     status: status,
@@ -272,7 +220,7 @@
                     action: function() {
                         $('#page-overlay').show();
                         $.ajax({
-                            url: '<?php echo base_url(); ?>administrator/inventory/updateStatus',
+                            url: '<?php echo base_url(); ?>administrator/products/updateStatus',
                             type: 'POST',
                             data: {
                                 "statusresult": "1",
@@ -284,15 +232,15 @@
                                 var msg = result.message;
                                 if (result.error == '0') {
                                     toastr['success'](msg);
-                                    $('#invetoryList').DataTable().ajax.reload();
+                                    $('#productsList').DataTable().ajax.reload();
                                 } else {
                                     toastr['warning'](msg);
-                                    $('#invetoryList').DataTable().ajax.reload();
+                                    $('#productsList').DataTable().ajax.reload();
                                 }
                             },
                             error: function(e) {
                                 toastr['danger'](msg);
-                                $('#invetoryList').DataTable().ajax.reload();
+                                $('#productsList').DataTable().ajax.reload();
                             }
                         });
                     }

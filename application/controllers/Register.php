@@ -71,6 +71,8 @@ class Register extends CI_Controller {
                     $this->session->set_flashdata('emsg','Your account is inactivated. Please contact admin');
                     redirect(base_url('login'));
                 }else if($response=='Success'){
+                    $updata = ['user_id'=>$this->session->id];
+                    $this->Common_model->updateDataFromTabel('tbl_cart',$updata,'session_id',sessionId());
                     redirect(base_url());
                 }
             }
