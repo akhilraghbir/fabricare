@@ -40,16 +40,19 @@ class Home extends CI_Controller {
         if($userid){
             $whereCondition  = "tc.user_id=".$userid;
         }else{
-            $whereCondition = "tc.session_id=".sessionId();
+            $sessionId = sessionId();
+            $whereCondition = "tc.session_id='.$sessionId.'";
         }
         $listData = $this->Datatables_model->getDataFromDB($selectColumns,$dataTableSortOrdering,$table_name,$joinsArray,$whereCondition,$indexColumn,'',$orderByColumn,$sortType,true,'POST');
         $data['items'] = $listData['data'];
+        echo "<pre>";
+        print_r($data['items']);exit;
         $data['address'] = $this->Common_model->getDataFromTable('tbl_addresses','*',  $whereField=array('user_id'=>userLoggedIn(),'pincode'=>$this->session->pincode_id), $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
         $this->home_template->load('front_template','cart',$data);        
     }
 
     public function schedule_pickup(){
-        $data['categories'] = $this->Common_model->getDataFromTable('tbl_categories','',  $whereField='parent_id', $whereValue=0, $orderBy='', $order='', $limit='', $offset=0, true);
+        $data['categories'] = $this->Common_model->getDataFromTable('tbl_categories','',  $whereField='parent_id', $whereValue='0', $orderBy='', $order='', $limit='', $offset=0, true);
         $this->home_template->load('front_template','schedule_pickup',$data);
     }
 
@@ -130,14 +133,19 @@ class Home extends CI_Controller {
             $catid = $_POST['cat_id'];
             if($catid!=''){
                 $data['categories'] = $this->Common_model->getDataFromTable('tbl_categories','id,category',  $whereField='parent_id', $whereValue=$catid, $orderBy='', $order='', $limit='', $offset=0, true);
-                if(is_array($data['categories']) && count($data['categories'])){
+                if(is_array($data['categories']) && count($data['categories'])>0){
                     $categories = array_column($data['categories'],'id');
                     $data['products'] = $this->Common_model->getDataFromTableWhereIn('tbl_products', $field='id,product_name,image,category_id',  $whereField='category_id', $whereValue=$categories, $orderBy='id', $order='ASC', $whereNotIn=0);
-                    $productids = join("','",array_column($data['products'],'id'));
-                    $data['services'] = $this->Common_model->getProductServiceWithPrices($productids);
-                    $html = $this->load->view('getProducts',$data,true);
-                    if($html!=''){
-                        $res['html'] = $html;
+                    if(is_array($data['products']) && count($data['products'])>0){
+                        $productids = join("','",array_column($data['products'],'id'));
+                        $data['services'] = $this->Common_model->getProductServiceWithPrices($productids);
+                        $html = $this->load->view('getProducts',$data,true);
+                        if($html!=''){
+                            $res['html'] = $html;
+                            $res['error'] = 0;
+                        }
+                    }else{
+                        $res['html'] = '';
                         $res['error'] = 0;
                     }
                 }else{
@@ -319,7 +327,7 @@ class Home extends CI_Controller {
         }
     }
 
-    public function getCartPriceDetails(){
+    public function getCartPriceDetails($coupons = []){
         $userid = userLoggedIn();
         if($userid){
             $whereCondition['user_id']  = $userid;
@@ -328,6 +336,7 @@ class Home extends CI_Controller {
         }
         $data['service_charge'] = $this->session->service_charge;
         $data['items'] = $this->Common_model->getDataFromTable('tbl_cart','*',  $whereField=$whereCondition, $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+        $data['coupons'] = $coupons;
         return $html = $this->load->view('price_details',$data,true);
     }
 
@@ -353,9 +362,14 @@ class Home extends CI_Controller {
                 $mincart = $coupons[0]['min_cart_value'];
                 if($mincart!=null && $sub_total<$mincart){
                     $res['error'] = 1;
+                    $this->session->unset_userdata($data['coupon_id']);
                     $res['msg'] = '<span class="text-danger">Min Bag value should be '.$mincart.'</span>';        
                 }else{
-                    
+                    $data['coupon_id'] = $coupons[0]['id'];
+                    $this->session->set_userdata($data);
+                    $res['error'] = 0;
+                    $res['msg'] = '<span class="text-success">Coupon Applied</span>';        
+                    $res['html'] = $this->getCartPriceDetails($coupons);
                 }
             }else{
                 $res['error'] = 1;
@@ -364,5 +378,87 @@ class Home extends CI_Controller {
             echo json_encode($res);exit;
         }
     }
-}
+
+    public function placeOrder(){
+        if($_POST){
+            foreach($this->input->post() as $fieldname=>$fieldvalue){
+                $data[$fieldname]= $this->input->post($fieldname);
+            }
+            $userid = userLoggedIn();
+            $countwhere['user_id'] = $where['user_id'] = $data['user_id'] = $userid;
+            $data['created_on'] = current_datetime();
+            $cart = $this->Common_model->getDataFromTable('tbl_cart','*',  $whereField=$where, $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+            if(is_array($cart) && count($cart)>0){
+                $data['reference_number'] = date('Ymd').'-'.rand(999,9999);
+                $data['payment_status'] = $data['status'] = 'Pending';
+                $orderItems['order_id'] = $orderid =  $this->Common_model->addDataIntoTable('tbl_orders',$data);
+                if($orderid){
+                    $orderUpdate['discount'] = $orderUpdate['sub_total'] = 0;
+                    foreach($cart as $items){
+                        $orderItems['product_id'] = $items['product_id'];
+                        $orderItems['service_id'] = $items['service_id'];
+                        $orderItems['quantity'] = $items['quantity'];
+                        $orderItems['price'] = $items['price'];
+                        $orderUpdate['sub_total']+=$items['price'] * $items['quantity'];
+                        $this->Common_model->addDataIntoTable('tbl_order_items',$orderItems);
+                    }
+                    $orderUpdate['service_charge'] = $this->session->service_charge;
+                    if(isset($this->session->coupon_id) && !empty($this->session->coupon_id)){
+                        $coupons = $this->Common_model->getDataFromTable('tbl_promocodes','*',  $whereField='id', $whereValue=$this->session->coupon_id,$orderBy='id', $order='desc', $limit='', $offset='0', true);
+                        if(is_array($coupons) && count($coupons)>0){
+                            $orderUpdate['is_coupon_applied'] = 'Yes';
+                            $orderUpdate['coupon_id'] = $coupons[0]['id'];
+                            $discounttype = $coupons[0]['promocode_type'];
+                            if($discounttype == 'Flat'){
+                                $orderUpdate['discount'] = $coupons[0]['discount_value'];
+                            }else{
+                            $discountPer = $coupons[0]['discount_value'];
+                                $orderUpdate['discount'] = ($total * $discountPer)/100;
+                            }
+                        }
+                    }
+                    $orderUpdate['grand_total'] = $orderUpdate['sub_total'] + $orderUpdate['service_charge'] - $orderUpdate['discount'];
+                    $upd = $this->Common_model->updateDataFromTabel('tbl_orders',$orderUpdate,'id',$orderid);
+                    if($upd){
+                        $res['error'] = 0;
+                        $res['msg'] = 'Order Placed Successfully';
+                        $res['payment'] = base_url('payment/'.base64_encode($data['reference_number']));
+                    }
+                }   
+            }else{
+                $res['error'] = 1;
+                $res['msg'] = 'No products found to place order';
+            }
+            echo json_encode($res);
+        }
+        
+    }
+
+    public function order_success(){
+        $data['meta_title'] = "Order Success";
+        $data['meta_keywords'] = SITENAME;
+        $data['meta_description'] = SITENAME;
+        $this->home_template->load('front_template','order_success',$data);
+    }
+
+    public function my_orders(){
+        $data['meta_title'] = "My Orders";
+        $data['meta_keywords'] = SITENAME;
+        $data['meta_description'] = SITENAME;
+        $data['orders'] = $this->Common_model->getDataFromTable('tbl_orders','*',  $whereField=array('user_id'=>$this->session->id), $whereValue='',$orderBy='id', $order='desc', $limit='', $offset='0', true);
+        $this->home_template->load('front_template','my_orders',$data);
+	}
+    public function view_invoice($id){
+        $id = base64_decode($id);
+	    $data['order_details'] = $this->Common_model->getDataFromTable('tbl_orders','*',  $whereField='reference_number', $whereValue=$id,$orderBy='id', $order='desc', $limit='', $offset='0', true);
+	    $data['order_items'] = $this->db->query("select tbl_order_items.*,tbl_products.product_name,tbl_services.service_name from tbl_order_items left join tbl_products on tbl_products.id = tbl_order_items.product_id left join tbl_services on tbl_services.id = tbl_order_items.service_id where order_id='".$data['order_details'][0]['id']."'")->result();
+	    $data['user_details'] = $this->Common_model->getDataFromTable('tbl_users','*',  $whereField='id', $whereValue=$data['order_details'][0]['user_id'],$orderBy='id', $order='desc', $limit='', $offset='0', true);
+	    $data['address'] = $this->Common_model->getDataFromTable('tbl_addresses','*',  $whereField='id', $whereValue=$data['order_details'][0]['address_id'],$orderBy='id', $order='desc', $limit='', $offset='0', true);
+	     if($data['order_details'][0]['coupon_id']!=0){
+            $data['coupon_data'] = $this->Common_model->getDataFromTable('tbl_coupons','promocode',  $whereField='id', $whereValue=$data['order_details'][0]['coupon_id'],$orderBy='id', $order='desc', $limit='', $offset='0', true);
+        }
+	    $this->load->view('invoice',$data);
+	}
+
+}   
 ?>

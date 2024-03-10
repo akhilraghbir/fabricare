@@ -45,8 +45,11 @@
           <div class="col-md-3">
             <div class="card shadow-sm mb-4">
               <div class="card-header">
-                <div class="card-title text-secondary fw-bold">Select Address</div>
-                  <select name="address_id" class="form-control">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="card-title text-secondary fw-bold d-inline mb-0">Select Address</span>
+                  <span><a href="/" class="text-theme-dark2 small text-decoration-none">Add New</a></span>
+                </div>
+                  <select name="address_id"  id="address_id" class="form-select">
                     <option value="">Select Address</option>
                     <?php if(is_array($address) && count($address)){ 
                       foreach($address as $addr){
@@ -54,6 +57,12 @@
                       <option value="<?= $addr['id'];?>"><?= $addr['address_title'];?></option>
                     <?php } }?>
                   </select>
+              </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+              <div class="card-header">
+                <div class="card-title text-secondary fw-bold">Select Pick Up Date</div>
+                  <input type="datetime-local" class="form-control" id="pickup_date" name="pickup_date" min="<?= date('Y-m-d h:i:s'); ?>">
               </div>
             </div>
             <div class="card cart-card card-price-details shadow-sm mb-4">
@@ -93,13 +102,14 @@
                   <p class="coupon_response"></p>
               </div>
             </div>
-            <button class="btn btn-lg btn-theme my-3 w-100 rounded-pill">Place Order</button>
+            <button class="btn btn-lg btn-theme my-3 w-100 rounded-pill" onclick="placeOrder()">Place Order</button>
           </div>
         </div>
         <?php } ?>
-        <div class="row d-none no-item-div">
-            <div class="col-md-12">
-
+        <div class="row <?= ($loop>0) ? 'd-none' : '';?> no-item-div bg-light rounded p-4">
+            <div class="col-md-12 text-center">
+                <img src="<?= base_url('assets/frontend/images/shopping-bag.png') ?>">
+                <div class="h5 mt-3">Your Bag is empty</div>
             </div>
         </div>
       </div>

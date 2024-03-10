@@ -6,9 +6,9 @@
             </div>
             
                 <div class="col-md-4">
-                  <div class="card shadow-sm">
-                    <div class="card-body add_address">
-                       <a href="<?= base_url('add-address'); ?>"> <i class="fa fa-plus"></i> </a>
+                  <div class="card shadow-sm mb-3 new-address bg-dark-subtle">
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                       <a href="<?= base_url('add-address'); ?>" class="stretched-link text-theme-dark2 h2"> <i class="bi bi-plus-circle-dotted"></i> </a>
                     </div>
                   </div>
                 </div>
@@ -17,11 +17,13 @@
                 foreach($addresses as $address){
             ?>
             <div class="col-md-4">
-              <div class="card shadow-sm">
+              <div class="card shadow-sm mb-3">
                 <div class="card-body">
-                  <div class="media">
-                    <img src="<?= base_url(); ?>assets/frontend/images/location.png" class="mr-3" alt="addresses">
-                    <div class="media-body">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                      <img src="<?= base_url(); ?>assets/frontend/images/location.png" width="30px" alt="addresses">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
                       <h6 class="mb-0 font-weight-bold"><?= $address['address_title'];?></h6>
                       <p class="mb-0 address-line"><?= $address['name'];?>, <?= $address['phone_number'];?></p>
                       <p class="mb-0 address-line"><?= $address['email_address'];?></p>
@@ -29,9 +31,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="card-footer text-right">
-                  <a href="<?= base_url('edit-address/'.$address['id']);?>" class="mr-4"><i class="bi bi-pencil-square"></i> Edit</a>
-                  <a href="<?= base_url('delete-address/'.$address['id']);?>"><i class="bi bi-trash"></i> Delete</a>
+                <div class="card-footer ">
+                  <a href="<?= base_url('edit-address/'.$address['id']);?>" class="mr-4 btn btn-theme rounded-pill px-3"><i class="bi bi-pencil-square"></i> Edit</a>
+                  <a href="<?= base_url('delete-address/'.$address['id']);?>" class="rounded-pill px-3 btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
                 </div>
               </div>
             </div>

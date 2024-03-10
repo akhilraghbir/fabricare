@@ -15,6 +15,80 @@ body{
   font-style: normal;
   font-size: 15px;
 }
+/*PRELOADING------------ */
+#overlayer {
+    width:100%;  
+    position:fixed;
+    z-index:8;
+    background:#2F4858;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+  .loader {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    border: 4px solid #Fff;
+    top: 50%;
+    animation: loader 2s infinite ease;
+    z-index: 9;
+    left: 50%;
+  }
+  
+  .loader-inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: #fff;
+    animation: loader-inner 2s infinite ease-in;
+  }
+  
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
+    }
+    
+    25% {
+      transform: rotate(180deg);
+    }
+    
+    50% {
+      transform: rotate(180deg);
+    }
+    
+    75% {
+      transform: rotate(360deg);
+    }
+    
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes loader-inner {
+    0% {
+      height: 0%;
+    }
+    
+    25% {
+      height: 0%;
+    }
+    
+    50% {
+      height: 100%;
+    }
+    
+    75% {
+      height: 100%;
+    }
+    
+    100% {
+      height: 0%;
+    }
+  }
 .bg-overley {
     position: absolute;
     background: #0000007a;
@@ -131,6 +205,12 @@ nav .cart-count{
     line-height: 28px;
     font-weight: 600;
 }
+.toast{
+    color: var(--bs-light);
+    position: fixed;
+    right: 1%;
+    bottom: 1%;
+}
 .img-box1 {
     position: relative;
     margin-bottom: 46px;
@@ -162,7 +242,10 @@ nav .cart-count{
     -webkit-animation: spin 7s infinite;
     animation: spin 7s infinite;
 }
-
+.addresses-page .new-address{
+    min-height: 200px;
+    border-style: dashed;
+}
 .th-experience {
     position: absolute;
     top: 15px;
@@ -649,7 +732,7 @@ nav .cart-count{
 }
 .inner-banner h1 {
     position: relative;
-    z-index: 99;
+    z-index: 7;
     font-weight: bold;
 }
 .vm-sec .card {
@@ -805,7 +888,39 @@ nav .cart-count{
     font-size: 20px;
 }
 
+#data-loader {
+    /* content: ''; */
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background:#446B73;
+    z-index: 8;
+}
 
-
-
-
+#data-loader-spinner {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    top: 50%;
+    margin-top: -50px;
+    border: calc(200px / 10) solid var(--theme-dark);
+    border-top: 20px solid var(--theme-light);
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px inset #ccc;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s linear infinite;
+    z-index: 9;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

@@ -13,15 +13,15 @@
                         <div class="card shadow rounded-lg bg-light mb-4">
                             <div class="card-body">
                                 <h3><?= $coupon['coupon_title']; ?></h3>
-                                <p><?= $coupon['description']; ?></p>
+                                <p class="mb-0"><?= $coupon['description']; ?></p>
                             </div>
                             <div class="card-footer">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <span>
-                                        <h4 id="p1<?= $coupon['id']; ?>" class="font-weight-bold text-white mb-0"><?= $coupon['promocode']; ?></h4>
+                                        <h4 id="p1<?= $coupon['id']; ?>" class="font-weight-bold text-theem-dark2 mb-0"><?= $coupon['promocode']; ?></h4>
                                     </span>
                                     <span>
-                                        <button onclick="copyToClipboard('#p1<?= $coupon['id']; ?>')" class="clipboard btn" title="Click to Copy"><i class="fa fa-copy" aria-hidden="true"></i></button>
+                                        <button onclick="copyToClipboard('#p1<?= $coupon['id']; ?>')" class="clipboard btn border-dark" title="Click to Copy"><i class="fa fa-copy" aria-hidden="true"></i></button>
                                     </span>
                                 </div>
                             </div>

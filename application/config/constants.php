@@ -85,15 +85,15 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 $DBPORT = 3306;
-if($_SERVER['HTTP_HOST']=='surbjit.aotg.ca'){
-   $CONFIG_SERVER_ROOT = 'https://surbjit.aotg.ca/';
-   $CONFIG_SERVER_PROJECT_ROOT = 'https://surbjit.aotg.ca/';
-   $CONFIG_SERVER_UPLOADS_ROOT = "https://surbjit.aotg.ca/uploads/";
-   $CONFIG_SERVER_ADMIN_ROOT = 'https://surbjit.aotg.ca/administrator/';
+if($_SERVER['HTTP_HOST']=='fabricare.digiepos.com'){
+   $CONFIG_SERVER_ROOT = 'https://fabricare.digiepos.com/';
+   $CONFIG_SERVER_PROJECT_ROOT = 'https://fabricare.digiepos.com/';
+   $CONFIG_SERVER_UPLOADS_ROOT = "https://fabricare.digiepos.com/uploads/";
+   $CONFIG_SERVER_ADMIN_ROOT = 'https://fabricare.digiepos.com/administrator/';
    $DBHOST='localhost';
-   $DBUSER='mycrywal_surbjit';
-   $DBPASS=';bk(xVdz6m&R';
-   $DBNAME='mycrywal_surbjit';
+   $DBUSER='ojasfyuc_fabricare';
+   $DBPASS='(6Okx6siwKZ@';
+   $DBNAME='ojasfyuc_fabricare';
 }else if($_SERVER['HTTP_HOST']=='localhost'){
    $CONFIG_SERVER_ROOT = 'http://localhost/fabricare/';
    $CONFIG_SERVER_PROJECT_ROOT = 'http://localhost/fabricare/';
@@ -121,5 +121,13 @@ defined('SMTP_EMAIL') OR define('SMTP_EMAIL','storyplank.com@gmail.com');
 defined('SMTP_PASS') OR define('SMTP_PASS','sjldppzohqvsneqr');
 defined('SMTP_NAME') OR define('SMTP_NAME',SITENAME);
 defined('CURRENCY_ICON') OR define('CURRENCY_ICON','<i class="fa fa-dollar"></i>');
-
-
+$sandbox = true;
+if($sandbox){
+defined('RAZORPAY_KEY') or define('RAZORPAY_KEY','rzp_test_iDRkHT2Chmn97G');
+defined('RAZORPAY_SECRET') or define('RAZORPAY_SECRET','IqbKOkTtAtxJSOkIlD9U5IXv');
+}else{
+defined('RAZORPAY_KEY') or define('RAZORPAY_KEY','rzp_live_oKMI3RlYq6LbQe');
+defined('RAZORPAY_SECRET') or define('RAZORPAY_SECRET','5MgjtfLCueKjhM6xjEgBN2mD');   
+}
+defined('WHATSAPP_API') or define('WHATSAPP_API','https://whatsera.com/api/');
+defined('WHATSAPP_API_KEY') or define('WHATSAPP_API_KEY','65ebf463c003f342e09d99c0');

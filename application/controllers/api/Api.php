@@ -33,7 +33,7 @@ class Api extends CI_Controller {
                           $data[$f] = $v;
                         }
                         $data['password'] = hash('sha256',$data['password']);
-                        $data['role'] = 'User';
+                        $data['user_type'] = 'User';
                         $data['created_on'] = date('Y-m-d H:i:s'); 
                         $res =  $this->Common_model->addDataIntoTable('tbl_users',$data);
                         if($res){   
@@ -136,10 +136,10 @@ class Api extends CI_Controller {
                         $insdata['password_reset_created'] = date('Y-m-d h:i:s');
                         $data['record'] = $this->Common_model->getDataFromTable('tbl_users','*', $whereField='username', $whereValue=$data['username'],$orderBy='id', $order='DESC', $limit='', $offset=0, true);
                         $getTemplate = $this->Common_model->getDataFromTable('tbl_emailtemplates','*', $whereField='id', $whereValue='2',$orderBy='id', $order='DESC', $limit='', $offset=0, true);
-                        $Subject = $getTemplate[0]['subject'];
+                        $Subject = $getTemplate[0]['template_subject'];
                         $otherCC = $getTemplate[0]['other_emails'];
                         $emaildata['email_body'] = $getTemplate[0]['template_body'];
-                        $emaildata['email_body'] = str_replace("##NAME##",$data['record'][0]['name'],$emaildata['email_body']);
+                        $emaildata['email_body'] = str_replace("##NAME##",$data['record'][0]['first_name'],$emaildata['email_body']);
                         $emaildata['email_body'] = str_replace("##SITEURL##",base_url(),$emaildata['email_body']);
                         $emaildata['email_body'] = str_replace("##SITENAME##",SITENAME,$emaildata['email_body']);
                         $emaildata['email_body'] = str_replace("##RESETURL##",base_url('userreset-password'),$emaildata['email_body']);

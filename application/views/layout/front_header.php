@@ -16,6 +16,10 @@
     </script>
   </head>
   <body>
+  <div id="overlayer"></div>
+  <span class="loader">
+    <span class="loader-inner"></span>
+  </span>
   <nav class="navbar navbar-expand-md navbar-dark bg-theme shadow-sm" aria-label="header">
       <div class="container">
         <a class="navbar-brand" href="<?= base_url(); ?>">
@@ -59,7 +63,7 @@
                 <li><a class="dropdown-item" href="#">My Profile</a></li>
                 <li><a href="<?= base_url('manage-address'); ?>" class="dropdown-item">My Addresses</a></li>
                 <li><a href="<?= base_url('coupons'); ?>" class="dropdown-item">Coupons</a></li>
-                <li><a class="dropdown-item" href="#">Orders History</a></li>
+                <li><a class="dropdown-item" href="<?= base_url('my-orders'); ?>">Orders History</a></li>
                 <li><a class="dropdown-item" href="<?= base_url('doLogout');?>">Logout</a></li>
               </ul>
             </span>

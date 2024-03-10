@@ -590,41 +590,7 @@ class Common_model extends CI_Model{
 		return $destination;
 	}
 	
-	public function getClientIds($accountant,$type = ''){
-        $where['status'] = 'Active';
-        $where['user_type'] = 'Client';
-        $where['accountant'] = $_POST['accountant'];
-        if($type!=''){
-            $where['client_type'] = $type;
-        }
-	    $data = $this->getDataFromTable('tbl_users','id',  $whereField=$where, $whereValue='', $orderBy='', $order='', $limit='', $offset=0, true); 
-	    if(is_array($data)){
-	        foreach($data as $d){
-	            $ids[] = $d['id'];
-	        }
-	        return join("','",$ids);
-	    }else{
-	        return "";
-	    }
-	}
-	
-	public function getDocs($ids = ''){
-	    if(!empty($ids)){
-	        $ids = "'".join("','",$ids)."'";
-	        $data = $this->getDataFromTableWhereIn('tbl_bill_attachments','file',  $whereField='bill_id', $whereValue=$ids, $orderBy='id', $order='ASC', $whereNotIn=0);
-	        foreach($data as $d){
-	            $docs[] = $d['file'];
-	        }
-	        return $docs;
-	    }
-	}
-	
-	public function getFinancialYear($column){
-	    if(!empty($column)){
-	       $data = $this->getDataFromTable('tbl_financial_years',$column,  $whereField='status', $whereValue='Active', $orderBy='', $order='', $limit='', $offset=0, true); 
-	       return $data[0];
-	    }
-	}
+
 	
 	function firebase_notification($tokens,$message){
 		$url = "https://fcm.googleapis.com/fcm/send";
@@ -640,6 +606,25 @@ class Common_model extends CI_Model{
             'Authorization:key='.$api_key
         );
 
+		$ch = curl_init();
+		   curl_setopt($ch, CURLOPT_URL, $url);
+		   curl_setopt($ch, CURLOPT_POST, true);
+		   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		   curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);  
+		   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+		   $result = curl_exec($ch);           
+		   if ($result === FALSE) {
+			   die('Curl failed: ' . curl_error($ch));
+		   }
+		   return $result;
+	}
+
+	public function SendWhatsAppNotification($fields){
+		
+		$url = WHATSAPP_API . 'send/text';
+		$headers = ['Content-Type:application/json'];
 		$ch = curl_init();
 		   curl_setopt($ch, CURLOPT_URL, $url);
 		   curl_setopt($ch, CURLOPT_POST, true);
